@@ -8,7 +8,7 @@ import { brand, services } from "@/lib/content";
 import type { Category, Project, Task } from "@/lib/types";
 import { useLang } from "./LanguageProvider";
 import { HeroPrism } from "./HeroPrism";
-import { ScrollGallery } from "./ScrollGallery";
+import { SitePreview } from "./SitePreview";
 
 export function HomePage() {
   const { t } = useLang();
@@ -98,8 +98,6 @@ export function HomePage() {
           {` ${brand.legalName} · Websites · Paid media · SEO · Brand · ${brand.tagline} · `.repeat(6)}
         </p>
       </div>
-
-      <ScrollGallery />
 
       <section className="mx-auto max-w-6xl px-4 py-20">
         <h2 className="text-4xl font-bold md:text-5xl">{t.servicesTitle}</h2>
@@ -214,16 +212,7 @@ export function ProjectCard({ project, category }: { project: Project; category?
 
   return (
     <article className="group overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm">
-      {project.imageUrl ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={project.imageUrl}
-          alt={project.title}
-          className="h-48 w-full object-cover"
-        />
-      ) : (
-        <div className="grid h-48 place-items-center bg-soft text-xs tracking-[0.4em] text-slate-400">WORK</div>
-      )}
+      <SitePreview url={project.liveUrl} title={project.title} className="h-48" />
       <div className="p-5">
         <div className="flex items-center justify-between gap-2 text-[11px] tracking-[0.2em] uppercase text-accent">
           <span>{category}</span>

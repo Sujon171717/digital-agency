@@ -6,7 +6,7 @@ import { AdminShell } from "@/components/AdminShell";
 export default function AdminHome() {
   const cards = [
     { href: "/admin/categories", title: "Categories", body: "Create groups for projects and tasks." },
-    { href: "/admin/projects", title: "Projects", body: "Upload portfolio work with a live link and image." },
+    { href: "/admin/projects", title: "Projects", body: "Publish portfolio work with a live website link. The landing page preview is generated automatically." },
     { href: "/admin/tasks", title: "Tasks", body: "Publish work updates and campaign tasks." },
   ];
 

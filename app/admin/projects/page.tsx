@@ -2,8 +2,8 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { AdminShell, Field, inputClass } from "@/components/AdminShell";
+import { SitePreview } from "@/components/SitePreview";
 import { createProject, deleteProject, listCategories, listProjects, updateProject } from "@/lib/firestore";
-import { uploadImage } from "@/lib/storage";
 import type { Category, Project } from "@/lib/types";
 
 const empty = {
@@ -11,7 +11,6 @@ const empty = {
   description: "",
   categoryId: "",
   liveUrl: "",
-  imageUrl: "",
   featured: false,
 };
 
@@ -19,7 +18,6 @@ export default function ProjectsAdmin() {
   const [items, setItems] = useState<Project[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [form, setForm] = useState(empty);
-  const [file, setFile] = useState<File | null>(null);
   const [editing, setEditing] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -39,13 +37,10 @@ export default function ProjectsAdmin() {
     setBusy(true);
     setError("");
     try {
-      let imageUrl = form.imageUrl;
-      if (file) imageUrl = await uploadImage(file, "projects");
-      const payload = { ...form, imageUrl };
+      const payload = { ...form, imageUrl: "" };
       if (editing) await updateProject(editing, payload);
       else await createProject(payload);
       setForm(empty);
-      setFile(null);
       setEditing(null);
       await refresh();
     } catch (err) {
@@ -58,6 +53,9 @@ export default function ProjectsAdmin() {
   return (
     <AdminShell>
       <h1 className="text-3xl font-semibold">Projects</h1>
+      <p className="mt-2 text-sm text-slate-500">
+        Add a live website link. The public site will show a preview of that landing page automatically.
+      </p>
       <form onSubmit={onSubmit} className="mt-6 grid gap-4 rounded-3xl border border-slate-100 bg-white p-5 md:grid-cols-2">
         <Field label="Title">
           <input className={inputClass} required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
@@ -76,13 +74,14 @@ export default function ProjectsAdmin() {
           </select>
         </Field>
         <Field label="Live link">
-          <input className={inputClass} type="url" placeholder="https://" value={form.liveUrl} onChange={(e) => setForm({ ...form, liveUrl: e.target.value })} />
-        </Field>
-        <Field label="Image file">
-          <input className={inputClass} type="file" accept="image/*" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
-        </Field>
-        <Field label="Or image URL">
-          <input className={inputClass} value={form.imageUrl} onChange={(e) => setForm({ ...form, imageUrl: e.target.value })} />
+          <input
+            className={inputClass}
+            type="url"
+            required
+            placeholder="https://"
+            value={form.liveUrl}
+            onChange={(e) => setForm({ ...form, liveUrl: e.target.value })}
+          />
         </Field>
         <label className="flex items-center gap-2 text-sm">
           <input type="checkbox" checked={form.featured} onChange={(e) => setForm({ ...form, featured: e.target.checked })} />
@@ -94,7 +93,7 @@ export default function ProjectsAdmin() {
             {busy ? "Saving…" : editing ? "Update project" : "Create project"}
           </button>
           {editing ? (
-            <button type="button" onClick={() => { setEditing(null); setForm(empty); setFile(null); }}>
+            <button type="button" onClick={() => { setEditing(null); setForm(empty); }}>
               Cancel
             </button>
           ) : null}
@@ -103,10 +102,7 @@ export default function ProjectsAdmin() {
       <div className="mt-8 grid gap-4">
         {items.map((item) => (
           <article key={item.id} className="flex flex-col gap-4 rounded-3xl border border-slate-100 bg-white p-4 sm:flex-row sm:items-center">
-            {item.imageUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={item.imageUrl} alt="" className="h-20 w-32 rounded-lg object-cover" />
-            ) : null}
+            <SitePreview url={item.liveUrl} title={item.title} className="h-20 w-full rounded-lg sm:w-32" />
             <div className="flex-1">
               <h2 className="font-medium">{item.title}</h2>
               <p className="text-sm text-slate-500">{item.liveUrl || "No live link"}</p>
@@ -121,7 +117,6 @@ export default function ProjectsAdmin() {
                     description: item.description,
                     categoryId: item.categoryId,
                     liveUrl: item.liveUrl,
-                    imageUrl: item.imageUrl,
                     featured: item.featured,
                   });
                 }}

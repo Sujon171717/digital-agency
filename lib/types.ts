@@ -16,7 +16,7 @@ export interface Project {
   description: string;
   categoryId: string;
   liveUrl: string;
-  imageUrl: string;
+  imageUrl?: string;
   featured: boolean;
   createdAt: number;
 }

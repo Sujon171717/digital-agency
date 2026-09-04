@@ -6,6 +6,7 @@ import { isFirebaseConfigured } from "@/lib/firebase";
 import { getProject } from "@/lib/firestore";
 import type { Project } from "@/lib/types";
 import { useLang } from "./LanguageProvider";
+import { SitePreview } from "./SitePreview";
 
 export function ProjectDetail({ id }: { id: string }) {
   const { t } = useLang();
@@ -43,10 +44,7 @@ export function ProjectDetail({ id }: { id: string }) {
       <Link href="/#work" className="text-sm font-medium text-slate-400 hover:text-accent">
         ← {t.navProjects}
       </Link>
-      {project.imageUrl ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={project.imageUrl} alt={project.title} className="mt-8 h-80 w-full rounded-3xl object-cover" />
-      ) : null}
+      <SitePreview url={project.liveUrl} title={project.title} className="mt-8 h-80 rounded-3xl" />
       <h1 className="mt-8 text-5xl font-bold">{project.title}</h1>
       <p className="mt-5 whitespace-pre-wrap leading-8 text-slate-500">{project.description}</p>
       {project.liveUrl ? (
