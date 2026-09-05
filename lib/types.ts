@@ -18,6 +18,7 @@ export interface Project {
   liveUrl: string;
   imageUrl?: string;
   featured: boolean;
+  completed?: boolean;
   createdAt: number;
 }
 
@@ -33,5 +34,12 @@ export interface Task {
 export interface VideoEntry {
   id: string;
   videoUrl: string;
+  completed?: boolean;
+  createdAt: number;
+}
+
+export interface Review {
+  id: string;
+  imageUrl: string;
   createdAt: number;
 }

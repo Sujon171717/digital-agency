@@ -42,13 +42,15 @@ export function SiteHeader() {
   const [active, setActive] = useState("home");
   const links = [
     { id: "home", label: t.navHome },
+    { id: "services", label: "Services" },
     { id: "work", label: t.navProjects },
+    { id: "reviews", label: "Reviews" },
     { id: "contact", label: t.navContact },
   ];
 
   useEffect(() => {
     if (pathname !== "/") return;
-    const ids = ["home", "work", "contact"];
+    const ids = ["home", "services", "work", "reviews", "contact"];
     const onScroll = () => {
       const next = [...ids].reverse().find((id) => {
         const el = document.getElementById(id);
@@ -65,20 +67,21 @@ export function SiteHeader() {
   if (pathname.startsWith("/admin")) return null;
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-100 bg-white/90 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-3 gap-y-2 px-4 py-3 sm:flex-nowrap sm:gap-4">
+    <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-[#f7f7f3]/85 backdrop-blur-xl">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-3 gap-y-2 px-5 py-3 sm:flex-nowrap sm:gap-4 lg:px-8">
         <SectionLink id="home" className="flex min-w-0 items-center">
-          <BrandLogo className="h-10 w-auto sm:h-14" priority />
+          <BrandLogo className="h-9 w-auto mix-blend-multiply sm:h-11" priority />
           <span className="sr-only">{brand.legalName}</span>
         </SectionLink>
-        <nav className="order-3 flex w-full items-center justify-center gap-1 text-xs font-medium text-slate-600 sm:order-none sm:w-auto sm:gap-2 sm:text-sm">
+        <p className="hidden text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400 lg:block">Independent digital studio / KSA + BD</p>
+        <nav className="order-3 flex w-full items-center justify-center gap-1 text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 sm:order-none sm:w-auto sm:gap-2 sm:text-[11px]">
           {links.map((link) => (
             <SectionLink
               key={link.id}
               id={link.id}
               className={`rounded-full px-3 py-2 sm:px-4 ${
                 pathname === "/" && active === link.id
-                  ? "bg-accent text-white"
+                  ? "text-accent"
                   : "hover:text-accent"
               }`}
             >
@@ -88,7 +91,7 @@ export function SiteHeader() {
         </nav>
         <SectionLink
           id="contact"
-          className="rounded-full bg-accent px-3 py-2 text-xs font-semibold text-white hover:bg-[#1e8a80] sm:px-5 sm:py-2.5 sm:text-sm"
+          className="rounded-full bg-foreground px-3 py-2 text-xs font-semibold text-white shadow-lg shadow-slate-900/10 hover:-translate-y-0.5 hover:bg-accent sm:px-5 sm:py-2.5 sm:text-sm"
         >
           {t.ctaPrimary}
         </SectionLink>

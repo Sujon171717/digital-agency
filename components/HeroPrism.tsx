@@ -23,9 +23,10 @@ export function HeroPrism() {
   const rotateX = pointer.y - 16 + progress * 28;
 
   return (
-    <div ref={ref} className="scene-3d grid h-[320px] place-items-center md:h-[420px]">
+    <div ref={ref} className="scene-3d relative grid h-[320px] place-items-center md:h-[470px]">
+      <div className="absolute h-64 w-64 rounded-full border border-accent/20 bg-accent/5 shadow-[0_0_100px_rgba(12,155,135,0.18)] md:h-80 md:w-80" />
       <div
-        className="prism"
+        className="prism z-10"
         style={{
           transform: `scale(var(--prism-scale)) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
           transition: "transform 80ms linear",
@@ -33,8 +34,9 @@ export function HeroPrism() {
       >
         <div className="prism-face front">
           <div>
-            <p className="text-xs tracking-[0.3em] uppercase text-accent">Website</p>
-            <p className="mt-2 text-4xl font-bold text-slate-900">1,000 SAR</p>
+            <p className="eyebrow">Digital presence</p>
+            <p className="mt-2 font-display text-5xl text-slate-900">1,000 SAR</p>
+            <p className="mt-2 text-xs text-slate-500">Built to convert attention into action.</p>
           </div>
         </div>
         <div className="prism-face right">

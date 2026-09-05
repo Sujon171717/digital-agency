@@ -1,12 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #1c2430;
-  --accent: #26a69a;
-  --accent-dark: #1e8a80;
-  --muted: #64748b;
-  --soft: #f4f7f7;
+  --background: #f7f7f3;
+  --foreground: #10221f;
+  --accent: #0c9b87;
+  --accent-dark: #087767;
+  --muted: #65736f;
+  --soft: #eaf1ed;
+  --ink: #10221f;
+  --line: rgba(16, 34, 31, 0.12);
 }
 
 @theme inline {
@@ -14,13 +16,13 @@
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
   --color-soft: var(--soft);
-  --font-sans: var(--font-outfit);
-  --font-display: var(--font-outfit);
+  --font-sans: "Times New Roman", Times, serif;
+  --font-display: "Times New Roman", Times, serif;
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: #26a69a #f4f7f7;
+  scrollbar-color: #0c9b87 #eaf1ed;
 }
 
 html {
@@ -31,7 +33,9 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-outfit), system-ui, sans-serif;
+  font-family: "Times New Roman", Times, serif;
+  background-image: linear-gradient(rgba(16, 34, 31, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(16, 34, 31, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
 }
 
 a,
@@ -40,14 +44,38 @@ button {
 }
 
 .font-display {
-  font-family: var(--font-outfit), system-ui, sans-serif;
+  font-family: "Times New Roman", Times, serif;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-size: 0.68rem;
   font-weight: 700;
+  letter-spacing: 0.24em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.section-rule {
+  border-top: 1px solid var(--line);
+}
+
+.reveal-up {
+  animation: reveal-up 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .blob {
   position: absolute;
   border-radius: 62% 38% 46% 54% / 48% 42% 58% 52%;
-  background: #eef4f4;
+  background: #dcece5;
+  filter: blur(1px);
 }
 
 .scene-3d {
@@ -75,11 +103,11 @@ button {
   place-items: center;
   padding: 1.5rem;
   text-align: center;
-  border: 1px solid rgba(38, 166, 154, 0.35);
-  background: linear-gradient(160deg, #ffffff, #eef7f6);
-  color: #1c2430;
+  border: 1px solid rgba(12, 155, 135, 0.35);
+  background: linear-gradient(160deg, #fbfcf8, #dcece5);
+  color: #10221f;
   backface-visibility: hidden;
-  box-shadow: 0 18px 40px rgba(28, 36, 48, 0.08);
+  box-shadow: 0 18px 40px rgba(16, 34, 31, 0.12);
 }
 
 .prism-face.front {
@@ -103,10 +131,10 @@ button {
 
 .scroll-card {
   backface-visibility: hidden;
-  border: 1px solid #e5eeee;
-  background: #ffffff;
-  color: #1c2430;
-  box-shadow: 0 24px 50px rgba(28, 36, 48, 0.12);
+  border: 1px solid rgba(16, 34, 31, 0.12);
+  background: #fbfcf8;
+  color: #10221f;
+  box-shadow: 0 24px 50px rgba(16, 34, 31, 0.12);
 }
 
 @keyframes marquee {
@@ -130,7 +158,8 @@ button {
   }
   .prism,
   .scroll-card,
-  .marquee {
+  .marquee,
+  .reveal-up {
     transform: none !important;
     animation: none !important;
   }

@@ -12,6 +12,7 @@ export function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [active, setActive] = useState("all");
+  const [showAll, setShowAll] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -56,7 +57,7 @@ export function ProjectsPage() {
         <p className="mt-12 text-slate-400">{t.projectsEmpty}</p>
       ) : (
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {visible.map((project) => (
+          {(showAll ? visible : visible.slice(0, 10)).map((project) => (
             <ProjectCard
               key={project.id}
               project={project}
@@ -65,6 +66,11 @@ export function ProjectsPage() {
           ))}
         </div>
       )}
+      {visible.length > 10 ? (
+        <button type="button" onClick={() => setShowAll((value) => !value)} className="mt-8 rounded-full border border-slate-200 px-5 py-2 text-sm font-semibold text-slate-700 hover:border-accent hover:text-accent">
+          {showAll ? "Show Less" : "See All Projects"}
+        </button>
+      ) : null}
     </div>
   );
 }

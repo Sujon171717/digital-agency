@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { VideoEntry } from "@/lib/types";
 import { getVideoSource } from "@/lib/video";
 
@@ -22,6 +22,12 @@ function VideoFrame({ video, eager = false }: { video: VideoEntry; eager?: boole
 
 export function VideoGallery({ videos }: { videos: VideoEntry[] }) {
   const [selected, setSelected] = useState<VideoEntry | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const cardRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  useEffect(() => {
+    cardRefs.current[activeIndex]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+  }, [activeIndex]);
 
   useEffect(() => {
     if (!selected) return;
@@ -40,14 +46,22 @@ export function VideoGallery({ videos }: { videos: VideoEntry[] }) {
 
   return (
     <>
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {videos.map((video) => (
+      <div className="mb-4 flex items-center justify-between gap-4">
+        <p className="text-sm text-slate-500">{String(activeIndex + 1).padStart(2, "0")} / {String(videos.length).padStart(2, "0")}</p>
+        <div className="flex gap-2">
+          <button type="button" onClick={() => setActiveIndex((current) => (current - 1 + videos.length) % videos.length)} aria-label="Previous video" className="grid h-11 w-11 place-items-center rounded-full border border-slate-300 text-lg text-foreground transition hover:border-accent hover:bg-accent hover:text-white">←</button>
+          <button type="button" onClick={() => setActiveIndex((current) => (current + 1) % videos.length)} aria-label="Next video" className="grid h-11 w-11 place-items-center rounded-full border border-slate-300 text-lg text-foreground transition hover:border-accent hover:bg-accent hover:text-white">→</button>
+        </div>
+      </div>
+      <div className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {videos.map((video, index) => (
           <button
             key={video.id}
+            ref={(element) => { cardRefs.current[index] = element; }}
             type="button"
             aria-label="Open video"
             onClick={() => setSelected(video)}
-            className="group relative aspect-video overflow-hidden rounded-3xl border border-slate-100 bg-slate-100 text-left shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg"
+            className="group relative aspect-video w-[280px] shrink-0 snap-start overflow-hidden rounded-3xl border border-slate-100 bg-slate-100 text-left shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg sm:w-[300px]"
           >
             <div className="pointer-events-none h-full w-full">
               <VideoFrame video={video} />

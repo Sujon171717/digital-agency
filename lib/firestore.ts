@@ -10,7 +10,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { getFirebaseApp } from "./firebase";
-import type { Category, Project, Task, VideoEntry } from "./types";
+import type { Category, Project, Review, Task, VideoEntry } from "./types";
 
 function requireDb() {
   const fb = getFirebaseApp();
@@ -115,4 +115,26 @@ export async function updateVideo(id: string, data: Partial<Omit<VideoEntry, "id
 export async function deleteVideo(id: string) {
   const db = requireDb();
   await deleteDoc(doc(db, "videos", id));
+}
+
+export async function listReviews(): Promise<Review[]> {
+  const db = requireDb();
+  const snap = await getDocs(query(collection(db, "reviews"), orderBy("createdAt", "desc")));
+  return snap.docs.map((d) => withId<Review>(d.id, d.data() as Omit<Review, "id">));
+}
+
+export async function createReview(data: Omit<Review, "id" | "createdAt">) {
+  const db = requireDb();
+  const ref = await addDoc(collection(db, "reviews"), { ...data, createdAt: Date.now() });
+  return ref.id;
+}
+
+export async function updateReview(id: string, data: Partial<Omit<Review, "id">>) {
+  const db = requireDb();
+  await updateDoc(doc(db, "reviews", id), data);
+}
+
+export async function deleteReview(id: string) {
+  const db = requireDb();
+  await deleteDoc(doc(db, "reviews", id));
 }

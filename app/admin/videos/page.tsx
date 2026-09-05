@@ -6,7 +6,7 @@ import { createVideo, deleteVideo, listVideos, updateVideo } from "@/lib/firesto
 import type { VideoEntry } from "@/lib/types";
 import { getVideoSource } from "@/lib/video";
 
-const empty = { videoUrl: "" };
+const empty = { videoUrl: "", completed: false };
 
 export default function VideosAdmin() {
   const [items, setItems] = useState<VideoEntry[]>([]);
@@ -50,8 +50,12 @@ export default function VideosAdmin() {
       <p className="mt-2 text-sm text-slate-500">Add YouTube or Google Drive links to your previous work.</p>
       <form onSubmit={onSubmit} className="mt-6 grid gap-4 rounded-3xl border border-slate-100 bg-white p-5">
         <Field label="Video link">
-          <input className={inputClass} type="url" required placeholder="https://youtube.com/... or https://drive.google.com/..." value={form.videoUrl} onChange={(event) => setForm({ videoUrl: event.target.value })} />
+          <input className={inputClass} type="url" required placeholder="https://youtube.com/... or https://drive.google.com/..." value={form.videoUrl} onChange={(event) => setForm({ ...form, videoUrl: event.target.value })} />
         </Field>
+        <label className="flex items-center gap-3 rounded-2xl border border-accent/30 bg-accent/5 p-4 text-sm">
+          <input className="h-5 w-5 accent-accent" type="checkbox" checked={form.completed} onChange={(event) => setForm({ ...form, completed: event.target.checked })} />
+          <span><strong className="block text-slate-900">Completed order</strong><span className="text-slate-500">Include this video in the completed orders count.</span></span>
+        </label>
         {error ? <p className="text-red-500">{error}</p> : null}
         <div className="flex gap-2">
           <button disabled={busy} className="rounded-full bg-accent px-4 py-2 font-semibold text-white transition hover:bg-[#1e8a80] disabled:opacity-40">
@@ -67,8 +71,9 @@ export default function VideosAdmin() {
               {getVideoSource(item.videoUrl) ? <iframe title="Video preview" src={getVideoSource(item.videoUrl)?.embedUrl} className="pointer-events-none h-full w-full border-0" loading="lazy" /> : null}
             </div>
             <p className="min-w-0 flex-1 truncate text-sm text-slate-500">{item.videoUrl}</p>
+            <p className={`text-xs font-semibold uppercase tracking-[0.16em] ${item.completed ? "text-accent" : "text-slate-400"}`}>{item.completed ? "Completed" : "In progress"}</p>
             <div className="flex gap-3 text-sm">
-              <button className="text-accent hover:underline" onClick={() => { setEditing(item.id); setForm({ videoUrl: item.videoUrl }); }}>Edit</button>
+              <button className="text-accent hover:underline" onClick={() => { setEditing(item.id); setForm({ videoUrl: item.videoUrl, completed: item.completed ?? false }); }}>Edit</button>
               <button className="text-red-400" onClick={() => { if (confirm("Delete this video?")) deleteVideo(item.id).then(refresh); }}>Delete</button>
             </div>
           </article>

@@ -12,6 +12,7 @@ const empty = {
   categoryId: "",
   liveUrl: "",
   featured: false,
+  completed: false,
 };
 
 export default function ProjectsAdmin() {
@@ -87,6 +88,10 @@ export default function ProjectsAdmin() {
           <input type="checkbox" checked={form.featured} onChange={(e) => setForm({ ...form, featured: e.target.checked })} />
           Featured on homepage
         </label>
+        <label className="flex items-center gap-3 rounded-2xl border border-accent/30 bg-accent/5 p-4 text-sm md:col-span-2">
+          <input className="h-5 w-5 accent-accent" type="checkbox" checked={form.completed} onChange={(e) => setForm({ ...form, completed: e.target.checked })} />
+          <span><strong className="block text-slate-900">Completed order</strong><span className="text-slate-500">Include this project in the completed orders count.</span></span>
+        </label>
         {error ? <p className="text-red-300 md:col-span-2">{error}</p> : null}
         <div className="flex gap-2 md:col-span-2">
           <button disabled={busy} className="rounded-full bg-accent px-4 py-2 font-semibold text-white disabled:opacity-40">
@@ -106,6 +111,7 @@ export default function ProjectsAdmin() {
             <div className="flex-1">
               <h2 className="font-medium">{item.title}</h2>
               <p className="text-sm text-slate-500">{item.liveUrl || "No live link"}</p>
+              <p className={`mt-2 text-xs font-semibold uppercase tracking-[0.16em] ${item.completed ? "text-accent" : "text-slate-400"}`}>{item.completed ? "Completed order" : "In progress"}</p>
             </div>
             <div className="flex gap-3 text-sm">
               <button
@@ -118,6 +124,7 @@ export default function ProjectsAdmin() {
                     categoryId: item.categoryId,
                     liveUrl: item.liveUrl,
                     featured: item.featured,
+                    completed: item.completed ?? false,
                   });
                 }}
               >
