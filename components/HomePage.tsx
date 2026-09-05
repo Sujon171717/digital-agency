@@ -3,27 +3,30 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { isFirebaseConfigured } from "@/lib/firebase";
-import { listCategories, listProjects, listTasks } from "@/lib/firestore";
+import { listCategories, listProjects, listTasks, listVideos } from "@/lib/firestore";
 import { brand, services } from "@/lib/content";
-import type { Category, Project, Task } from "@/lib/types";
+import type { Category, Project, Task, VideoEntry } from "@/lib/types";
 import { useLang } from "./LanguageProvider";
 import { HeroPrism } from "./HeroPrism";
 import { SitePreview } from "./SitePreview";
+import { VideoGallery } from "./VideoGallery";
 
 export function HomePage() {
   const { t } = useLang();
   const [projects, setProjects] = useState<Project[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [videos, setVideos] = useState<VideoEntry[]>([]);
   const [active, setActive] = useState("all");
 
   useEffect(() => {
     if (!isFirebaseConfigured) return;
-    Promise.all([listProjects(), listTasks(), listCategories()])
-      .then(([p, tk, c]) => {
+    Promise.all([listProjects(), listTasks(), listCategories(), listVideos()])
+      .then(([p, tk, c, v]) => {
         setProjects(p);
         setTasks(tk.slice(0, 4));
         setCategories(c.filter((item) => item.type !== "task"));
+        setVideos(v);
       })
       .catch(() => undefined);
   }, []);
@@ -52,7 +55,7 @@ export function HomePage() {
             <p className="mb-4 text-sm font-semibold tracking-[0.2em] uppercase text-accent">
               {t.heroKicker}
             </p>
-            <h1 className="text-5xl font-bold leading-[1.1] text-slate-900 md:text-6xl">
+            <h1 className="text-4xl font-bold leading-[1.1] text-slate-900 sm:text-5xl md:text-6xl">
               Welcome <span className="text-accent">!</span>
               <span className="mt-2 block">{t.heroTitle}</span>
             </h1>
@@ -161,6 +164,15 @@ export function HomePage() {
           </div>
         )}
       </section>
+
+      {videos.length > 0 && (
+        <section id="video-editing" className="mx-auto max-w-6xl px-4 pb-20">
+          <h2 className="text-4xl font-bold md:text-5xl">Video Editing</h2>
+          <div className="mt-8">
+            <VideoGallery videos={videos} />
+          </div>
+        </section>
+      )}
 
       {tasks.length > 0 && (
         <section className="mx-auto max-w-6xl px-4 pb-20">

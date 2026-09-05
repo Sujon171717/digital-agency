@@ -27,7 +27,7 @@ export function HeroPrism() {
       <div
         className="prism"
         style={{
-          transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
+          transform: `scale(var(--prism-scale)) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
           transition: "transform 80ms linear",
         }}
       >

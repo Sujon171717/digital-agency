@@ -66,17 +66,17 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-100 bg-white/90 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-        <SectionLink id="home" className="flex items-center">
-          <BrandLogo className="h-12 w-auto sm:h-14" priority />
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-3 gap-y-2 px-4 py-3 sm:flex-nowrap sm:gap-4">
+        <SectionLink id="home" className="flex min-w-0 items-center">
+          <BrandLogo className="h-10 w-auto sm:h-14" priority />
           <span className="sr-only">{brand.legalName}</span>
         </SectionLink>
-        <nav className="flex items-center gap-1 text-sm font-medium text-slate-600 sm:gap-2">
+        <nav className="order-3 flex w-full items-center justify-center gap-1 text-xs font-medium text-slate-600 sm:order-none sm:w-auto sm:gap-2 sm:text-sm">
           {links.map((link) => (
             <SectionLink
               key={link.id}
               id={link.id}
-              className={`rounded-full px-4 py-2 ${
+              className={`rounded-full px-3 py-2 sm:px-4 ${
                 pathname === "/" && active === link.id
                   ? "bg-accent text-white"
                   : "hover:text-accent"
@@ -88,7 +88,7 @@ export function SiteHeader() {
         </nav>
         <SectionLink
           id="contact"
-          className="rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#1e8a80]"
+          className="rounded-full bg-accent px-3 py-2 text-xs font-semibold text-white hover:bg-[#1e8a80] sm:px-5 sm:py-2.5 sm:text-sm"
         >
           {t.ctaPrimary}
         </SectionLink>
@@ -105,9 +105,9 @@ export function SiteFooter() {
   return (
     <footer className="mt-auto border-t border-slate-100 bg-soft">
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-10 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center gap-4">
+        <div className="flex min-w-0 items-center gap-3 sm:gap-4">
           <BrandLogo className="h-12 w-auto" />
-          <p>
+          <p className="min-w-0 text-xs leading-5 sm:text-sm">
             {brand.legalName} · {t.footerNote}
           </p>
         </div>

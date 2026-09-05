@@ -8,13 +8,14 @@ export default function AdminHome() {
     { href: "/admin/categories", title: "Categories", body: "Create groups for projects and tasks." },
     { href: "/admin/projects", title: "Projects", body: "Publish portfolio work with a live website link. The landing page preview is generated automatically." },
     { href: "/admin/tasks", title: "Tasks", body: "Publish work updates and campaign tasks." },
+    { href: "/admin/videos", title: "Video Editing", body: "Showcase previous video editing work from YouTube or Google Drive." },
   ];
 
   return (
     <AdminShell>
       <h1 className="text-3xl font-semibold">Dashboard</h1>
       <p className="mt-2 text-slate-500">Manage everything that appears on the public site.</p>
-      <div className="mt-8 grid gap-4 md:grid-cols-3">
+      <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {cards.map((card) => (
           <Link key={card.href} href={card.href} className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm hover:border-accent">
             <h2 className="text-xl font-medium">{card.title}</h2>

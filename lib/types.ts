@@ -29,3 +29,9 @@ export interface Task {
   status: TaskStatus;
   createdAt: number;
 }
+
+export interface VideoEntry {
+  id: string;
+  videoUrl: string;
+  createdAt: number;
+}

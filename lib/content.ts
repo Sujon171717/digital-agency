@@ -33,7 +33,7 @@ export const copy = {
   legalTitle: "Legal support",
   legalBody:
     "Consultation and legal assistance through licensed Bangladeshi advocates, available when your business needs it.",
-  projectsTitle: "Selected work",
+  projectsTitle: "Existing Projects",
   projectsEmpty: "Portfolio items will appear here once they are published from the admin panel.",
   viewLive: "Visit live site",
   viewDetails: "Case details",

@@ -34,6 +34,11 @@ body {
   font-family: var(--font-outfit), system-ui, sans-serif;
 }
 
+a,
+button {
+  transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease, opacity 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
 .font-display {
   font-family: var(--font-outfit), system-ui, sans-serif;
   font-weight: 700;
@@ -59,6 +64,7 @@ body {
   position: relative;
   width: 240px;
   height: 240px;
+  --prism-scale: 1;
   transform-style: preserve-3d;
 }
 
@@ -127,5 +133,11 @@ body {
   .marquee {
     transform: none !important;
     animation: none !important;
+  }
+}
+
+@media (max-width: 419px) {
+  .prism {
+    --prism-scale: 0.8;
   }
 }
