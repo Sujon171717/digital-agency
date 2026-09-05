@@ -40,7 +40,7 @@ function SectionLink({
 }
 
 export function SiteHeader() {
-  const { t, toggleLanguage } = useLang();
+  const { t, language, setLanguage } = useLang();
   const pathname = usePathname();
   const [active, setActive] = useState("home");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -83,14 +83,23 @@ export function SiteHeader() {
         </SectionLink>
         <p className="hidden text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400 lg:block">{t.headerDescriptor}</p>
         <div className="flex items-center gap-2 sm:order-4">
-          <button
-            type="button"
-            onClick={toggleLanguage}
-            aria-label={`Switch language to ${t.languageLabel}`}
-            className="border border-slate-300 px-3 py-2 text-xs font-semibold text-foreground hover:border-accent hover:text-accent"
-          >
-            {t.languageLabel}
-          </button>
+          <div className="flex items-center border border-slate-300" role="group" aria-label="Language">
+            {[
+              ["ar", "العربية"],
+              ["en", "English"],
+              ["bn", "বাংলা"],
+            ].map(([value, label]) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setLanguage(value as "ar" | "en" | "bn")}
+                aria-pressed={language === value}
+                className={`px-2.5 py-2 text-xs font-semibold transition-colors ${language === value ? "bg-foreground text-white" : "text-foreground hover:bg-soft hover:text-accent"}`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
           <button
             type="button"
             aria-expanded={menuOpen}

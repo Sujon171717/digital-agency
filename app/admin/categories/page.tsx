@@ -2,19 +2,35 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { AdminShell, Field, inputClass } from "@/components/AdminShell";
-import { createCategory, deleteCategory, listCategories, updateCategory } from "@/lib/firestore";
-import type { Category, CategoryType } from "@/lib/types";
+import { arabicCopy, banglaCopy, copy } from "@/lib/content";
+import { createService, deleteService, listServices, updateService } from "@/lib/firestore";
+import type { Service } from "@/lib/types";
 
-const empty = { name: "", slug: "", type: "both" as CategoryType };
+const empty = { name: "", nameBn: "", nameAr: "", slug: "" };
 
-export default function CategoriesAdmin() {
-  const [items, setItems] = useState<Category[]>([]);
+const defaultServices = copy.services.map((name, index) => ({
+  name,
+  nameBn: banglaCopy.services[index] ?? name,
+  nameAr: arabicCopy.services[index] ?? name,
+  slug: name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""),
+}));
+
+export default function ServicesAdmin() {
+  const [items, setItems] = useState<Service[]>([]);
   const [form, setForm] = useState(empty);
   const [editing, setEditing] = useState<string | null>(null);
   const [error, setError] = useState("");
 
   async function refresh() {
-    setItems(await listCategories());
+    const services = await listServices();
+    const existingSlugs = new Set(services.map((service) => service.slug));
+    const missingServices = defaultServices.filter((service) => !existingSlugs.has(service.slug));
+    if (missingServices.length > 0) {
+      await Promise.all(missingServices.map((service) => createService(service)));
+      setItems(await listServices());
+      return;
+    }
+    setItems(services);
   }
 
   useEffect(() => {
@@ -25,8 +41,8 @@ export default function CategoriesAdmin() {
     e.preventDefault();
     setError("");
     try {
-      if (editing) await updateCategory(editing, form);
-      else await createCategory(form);
+      if (editing) await updateService(editing, form);
+      else await createService(form);
       setForm(empty);
       setEditing(null);
       await refresh();
@@ -37,20 +53,20 @@ export default function CategoriesAdmin() {
 
   return (
     <AdminShell>
-      <h1 className="text-3xl font-semibold">Categories</h1>
+      <h1 className="text-3xl font-semibold">Services</h1>
+      <p className="mt-2 text-sm text-slate-500">Manage the services shown in the public Services section. Existing services are imported automatically the first time this page loads.</p>
       <form onSubmit={onSubmit} className="mt-6 grid gap-4 rounded-3xl border border-slate-100 bg-white p-5 md:grid-cols-2">
-        <Field label="Name">
+        <Field label="English name">
           <input className={inputClass} required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value, slug: form.slug || e.target.value.toLowerCase().replace(/\s+/g, "-") })} />
+        </Field>
+        <Field label="Bangla name">
+          <input className={inputClass} value={form.nameBn} onChange={(e) => setForm({ ...form, nameBn: e.target.value })} />
+        </Field>
+        <Field label="Arabic name">
+          <input className={inputClass} dir="rtl" value={form.nameAr} onChange={(e) => setForm({ ...form, nameAr: e.target.value })} />
         </Field>
         <Field label="Slug">
           <input className={inputClass} required value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} />
-        </Field>
-        <Field label="Used for">
-          <select className={inputClass} value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value as CategoryType })}>
-            <option value="both">Projects & tasks</option>
-            <option value="project">Projects only</option>
-            <option value="task">Tasks only</option>
-          </select>
         </Field>
         {error ? <p className="text-red-300 md:col-span-2">{error}</p> : null}
         <div className="flex gap-2 md:col-span-2">
@@ -67,7 +83,7 @@ export default function CategoriesAdmin() {
           <thead className="bg-soft text-slate-500">
             <tr>
               <th className="px-4 py-3">Name</th>
-              <th className="px-4 py-3">Type</th>
+              <th className="px-4 py-3">Arabic</th>
               <th className="px-4 py-3" />
             </tr>
           </thead>
@@ -75,15 +91,15 @@ export default function CategoriesAdmin() {
             {items.map((item) => (
               <tr key={item.id} className="border-t border-slate-100">
                 <td className="px-4 py-3">{item.name}</td>
-                <td className="px-4 py-3">{item.type}</td>
+                <td className="px-4 py-3" dir="rtl">{item.nameAr || "—"}</td>
                 <td className="px-4 py-3 text-right">
-                  <button className="mr-3 text-accent hover:underline" onClick={() => { setEditing(item.id); setForm({ name: item.name, slug: item.slug, type: item.type }); }}>
+                  <button className="mr-3 text-accent hover:underline" onClick={() => { setEditing(item.id); setForm({ name: item.name, nameBn: item.nameBn ?? "", nameAr: item.nameAr ?? "", slug: item.slug }); }}>
                     Edit
                   </button>
                   <button
                     className="text-red-300"
                     onClick={() => {
-                      if (confirm("Delete this category?")) deleteCategory(item.id).then(refresh);
+                      if (confirm("Delete this service?")) deleteService(item.id).then(refresh);
                     }}
                   >
                     Delete

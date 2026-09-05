@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${outfit.variable} ${instrument.variable} ${tiroBangla.variable} h-full antialiased`}>
+    <html lang="ar" dir="rtl" className={`${outfit.variable} ${instrument.variable} ${tiroBangla.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <LanguageProvider>
           <AuthProvider>

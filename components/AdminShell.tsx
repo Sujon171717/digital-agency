@@ -7,11 +7,12 @@ import { useAuth } from "./AuthProvider";
 
 const links = [
   { href: "/admin", label: "Dashboard" },
-  { href: "/admin/categories", label: "Categories" },
+  { href: "/admin/services", label: "Services" },
   { href: "/admin/projects", label: "Projects" },
   { href: "/admin/tasks", label: "Tasks" },
   { href: "/admin/videos", label: "Video Editing" },
   { href: "/admin/reviews", label: "Reviews" },
+  { href: "/admin/designs", label: "Poster & Banners" },
 ];
 
 export function AdminShell({ children }: { children: React.ReactNode }) {

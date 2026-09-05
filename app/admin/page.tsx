@@ -5,10 +5,11 @@ import { AdminShell } from "@/components/AdminShell";
 
 export default function AdminHome() {
   const cards = [
-    { href: "/admin/categories", title: "Categories", body: "Create groups for projects and tasks." },
+    { href: "/admin/services", title: "Services", body: "Manage the services shown on the public site." },
     { href: "/admin/projects", title: "Projects", body: "Publish portfolio work with a live website link. The landing page preview is generated automatically." },
     { href: "/admin/tasks", title: "Tasks", body: "Publish work updates and campaign tasks." },
     { href: "/admin/videos", title: "Video Editing", body: "Showcase previous video editing work from YouTube or Google Drive." },
+    { href: "/admin/designs", title: "Poster & Banners", body: "Add poster and banner designs from Google Drive." },
   ];
 
   return (

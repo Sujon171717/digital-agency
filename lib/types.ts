@@ -10,6 +10,24 @@ export interface Category {
   createdAt: number;
 }
 
+export interface Service {
+  id: string;
+  name: string;
+  nameBn?: string;
+  nameAr?: string;
+  slug: string;
+  createdAt: number;
+}
+
+export type DesignAssetKind = "poster" | "banner";
+
+export interface DesignAsset {
+  id: string;
+  imageUrl: string;
+  kind: DesignAssetKind;
+  createdAt: number;
+}
+
 export interface Project {
   id: string;
   title: string;

@@ -10,7 +10,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { getFirebaseApp } from "./firebase";
-import type { Category, Project, Review, Task, VideoEntry } from "./types";
+import type { Category, DesignAsset, Project, Review, Service, Task, VideoEntry } from "./types";
 
 function requireDb() {
   const fb = getFirebaseApp();
@@ -42,6 +42,28 @@ export async function updateCategory(id: string, data: Partial<Omit<Category, "i
 export async function deleteCategory(id: string) {
   const db = requireDb();
   await deleteDoc(doc(db, "categories", id));
+}
+
+export async function listServices(): Promise<Service[]> {
+  const db = requireDb();
+  const snap = await getDocs(query(collection(db, "services"), orderBy("createdAt", "asc")));
+  return snap.docs.map((d) => withId<Service>(d.id, d.data() as Omit<Service, "id">));
+}
+
+export async function createService(data: Omit<Service, "id" | "createdAt">) {
+  const db = requireDb();
+  const ref = await addDoc(collection(db, "services"), { ...data, createdAt: Date.now() });
+  return ref.id;
+}
+
+export async function updateService(id: string, data: Partial<Omit<Service, "id">>) {
+  const db = requireDb();
+  await updateDoc(doc(db, "services", id), data);
+}
+
+export async function deleteService(id: string) {
+  const db = requireDb();
+  await deleteDoc(doc(db, "services", id));
 }
 
 export async function listProjects(): Promise<Project[]> {
@@ -137,4 +159,26 @@ export async function updateReview(id: string, data: Partial<Omit<Review, "id">>
 export async function deleteReview(id: string) {
   const db = requireDb();
   await deleteDoc(doc(db, "reviews", id));
+}
+
+export async function listDesignAssets(): Promise<DesignAsset[]> {
+  const db = requireDb();
+  const snap = await getDocs(query(collection(db, "designAssets"), orderBy("createdAt", "desc")));
+  return snap.docs.map((d) => withId<DesignAsset>(d.id, d.data() as Omit<DesignAsset, "id">));
+}
+
+export async function createDesignAsset(data: Omit<DesignAsset, "id" | "createdAt">) {
+  const db = requireDb();
+  const ref = await addDoc(collection(db, "designAssets"), { ...data, createdAt: Date.now() });
+  return ref.id;
+}
+
+export async function updateDesignAsset(id: string, data: Partial<Omit<DesignAsset, "id">>) {
+  const db = requireDb();
+  await updateDoc(doc(db, "designAssets", id), data);
+}
+
+export async function deleteDesignAsset(id: string) {
+  const db = requireDb();
+  await deleteDoc(doc(db, "designAssets", id));
 }

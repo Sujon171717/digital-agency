@@ -42,6 +42,10 @@ html[lang="bn"] body {
   font-family: var(--font-tiro-bangla), "Times New Roman", serif;
 }
 
+html[lang="ar"] body {
+  font-family: "Noto Naskh Arabic", "Segoe UI", Tahoma, sans-serif;
+}
+
 a,
 button {
   transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease, opacity 180ms ease, transform 180ms ease, box-shadow 180ms ease;
@@ -55,6 +59,10 @@ button {
 
 html[lang="bn"] .font-display {
   font-family: var(--font-tiro-bangla), serif;
+}
+
+html[lang="ar"] .font-display {
+  font-family: "Noto Naskh Arabic", "Segoe UI", Tahoma, sans-serif;
 }
 
 .eyebrow {

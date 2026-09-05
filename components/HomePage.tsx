@@ -3,9 +3,9 @@
 import { Children, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { isFirebaseConfigured } from "@/lib/firebase";
-import { listCategories, listProjects, listReviews, listTasks, listVideos } from "@/lib/firestore";
+import { listCategories, listDesignAssets, listProjects, listReviews, listServices, listTasks, listVideos } from "@/lib/firestore";
 import { brand } from "@/lib/content";
-import type { Category, Project, Review, Task, VideoEntry } from "@/lib/types";
+import type { Category, DesignAsset, Project, Review, Service, Task, VideoEntry } from "@/lib/types";
 import { useLang } from "./LanguageProvider";
 import { HeroPrism } from "./HeroPrism";
 import { SitePreview } from "./SitePreview";
@@ -17,15 +17,21 @@ export function HomePage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [services, setServices] = useState<Service[]>([]);
+  const [designAssets, setDesignAssets] = useState<DesignAsset[]>([]);
   const [videos, setVideos] = useState<VideoEntry[]>([]);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [active, setActive] = useState("all");
   const [selectedReview, setSelectedReview] = useState<Review | null>(null);
+  const [selectedDesign, setSelectedDesign] = useState<DesignAsset | null>(null);
 
   useEffect(() => {
-    if (!selectedReview) return;
+    if (!selectedReview && !selectedDesign) return;
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setSelectedReview(null);
+      if (event.key === "Escape") {
+        setSelectedReview(null);
+        setSelectedDesign(null);
+      }
     };
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKeyDown);
@@ -33,17 +39,19 @@ export function HomePage() {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [selectedReview]);
+  }, [selectedReview, selectedDesign]);
 
   useEffect(() => {
     if (!isFirebaseConfigured) return;
-    Promise.all([listProjects(), listTasks(), listCategories(), listVideos(), listReviews()])
-      .then(([p, tk, c, v, r]) => {
+    Promise.all([listProjects(), listTasks(), listCategories(), listVideos(), listReviews(), listServices(), listDesignAssets()])
+      .then(([p, tk, c, v, r, s, d]) => {
         setProjects(p);
         setTasks(tk.slice(0, 4));
         setCategories(c.filter((item) => item.type !== "task"));
         setVideos(v);
         setReviews(r);
+        setServices(s);
+        setDesignAssets(d);
       })
       .catch(() => undefined);
   }, []);
@@ -79,10 +87,10 @@ export function HomePage() {
             <p className="eyebrow mb-5">
               {t.heroKicker}
             </p>
-            <h1 className={`font-display max-w-3xl leading-[0.98] text-foreground ${language === "bn" ? "text-4xl sm:text-[2.8rem] md:text-[3.5rem] lg:text-[4rem]" : "text-5xl sm:text-[3.4rem] md:text-[4.4rem] lg:text-[5rem]"}`}>
-              A professional digital presence that wins customers.
+            <h1 className={`font-display max-w-3xl leading-[0.98] text-foreground ${language !== "en" ? "text-4xl sm:text-[2.8rem] md:text-[3.5rem] lg:text-[4rem]" : "text-5xl sm:text-[3.4rem] md:text-[4.4rem] lg:text-[5rem]"}`}>
+              {t.heroTitle}
             </h1>
-            <p className="mt-7 max-w-xl text-base leading-7 text-slate-600 md:text-lg md:leading-8">We design conversion-focused websites and run full-funnel digital marketing — paid ads, SEO, social, and WhatsApp automation — so your brand looks credible and generates qualified leads.</p>
+            <p className="mt-7 max-w-xl text-base leading-7 text-slate-600 md:text-lg md:leading-8">{t.heroBody}</p>
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <a
                 href="#contact"
@@ -136,13 +144,13 @@ export function HomePage() {
           <h2 className="mt-4 max-w-2xl text-4xl font-semibold leading-tight tracking-[-0.03em] md:text-6xl">Built for the moment your customer decides.</h2>
           <p className="mt-5 max-w-2xl text-slate-600">{t.servicesIntro}</p>
         </div>
-        <ServicesGrid />
+        <ServicesGrid services={services} />
       </section>
 
       <section className="mx-auto grid max-w-7xl gap-px border-y border-slate-200 bg-slate-200 md:grid-cols-3">
         <article className="bg-foreground p-8 text-white md:col-span-2 md:p-12">
           <p className="eyebrow text-accent/80">Our point of view</p>
-          <h2 className={`mt-5 max-w-2xl font-semibold leading-tight ${language === "bn" ? "text-3xl md:text-4xl" : "text-4xl md:text-5xl"}`}>{t.focusTitle}</h2>
+          <h2 className={`mt-5 max-w-2xl font-semibold leading-tight ${language !== "en" ? "text-3xl md:text-4xl" : "text-4xl md:text-5xl"}`}>{t.focusTitle}</h2>
           <p className="mt-5 max-w-2xl leading-8 text-white/70">{t.focusBody}</p>
         </article>
         <article className="bg-soft p-8 md:p-12">
@@ -156,9 +164,9 @@ export function HomePage() {
         <div className="section-rule grid gap-10 pt-5 md:grid-cols-[0.8fr_1.2fr]">
           <div>
             <p className="eyebrow">How we work</p>
-            <h2 className={`mt-4 font-semibold leading-tight tracking-[-0.03em] ${language === "bn" ? "text-3xl md:text-4xl" : "text-4xl md:text-5xl"}`}>{t.teamTitle}</h2>
+            <h2 className={`mt-4 font-semibold leading-tight tracking-[-0.03em] ${language !== "en" ? "text-3xl md:text-4xl" : "text-4xl md:text-5xl"}`}>{t.teamTitle}</h2>
           </div>
-          <p className={`max-w-2xl leading-9 text-slate-600 ${language === "bn" ? "text-base md:text-xl" : "text-xl md:text-2xl"}`}>{t.teamBody}</p>
+          <p className={`max-w-2xl leading-9 text-slate-600 ${language !== "en" ? "text-base md:text-xl" : "text-xl md:text-2xl"}`}>{t.teamBody}</p>
         </div>
       </section>
 
@@ -265,6 +273,70 @@ export function HomePage() {
         </div>
       ) : null}
 
+      {designAssets.length > 0 && (
+        <section className="mx-auto max-w-6xl px-4 pb-20">
+          <p className="eyebrow">Visual identity</p>
+          <h2 className={`mt-4 font-semibold tracking-[-0.03em] ${language !== "en" ? "text-2xl md:text-4xl" : "text-4xl md:text-6xl"}`}>Poster and Banner Design</h2>
+          <div className="mt-8 grid gap-10">
+            {(["poster", "banner"] as const).map((kind) => {
+              const designs = designAssets.filter((asset) => asset.kind === kind);
+              if (designs.length === 0) return null;
+              return (
+                <div key={kind}>
+                  <h3 className="mb-4 text-xl font-semibold capitalize">{kind}s</h3>
+                  <CardSlider items={designs.map((design) => (
+                    <button
+                      key={design.id}
+                      type="button"
+                      onClick={() => setSelectedDesign(design)}
+                      aria-label={`Open ${kind} design`}
+                      className="group w-full max-w-[280px] overflow-hidden rounded-2xl border border-slate-200 bg-white text-left shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+                    >
+                      <img
+                        src={getDriveImageUrl(design.imageUrl) ?? design.imageUrl}
+                        alt={`${kind} design`}
+                        onError={(event) => {
+                          const fallback = getDriveImageFallbackUrl(design.imageUrl);
+                          if (fallback && event.currentTarget.src !== fallback) event.currentTarget.src = fallback;
+                        }}
+                        className="h-52 w-full object-cover"
+                      />
+                      <span className="block border-t border-slate-100 px-4 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 transition group-hover:text-accent">View full design</span>
+                    </button>
+                  ))} />
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
+      {selectedDesign ? (
+        <div
+          className="fixed inset-0 z-50 grid place-items-center bg-foreground/85 p-4 backdrop-blur-md"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Design image"
+          onMouseDown={() => setSelectedDesign(null)}
+        >
+          <div className="relative flex max-h-[94vh] max-w-5xl items-center justify-center" onMouseDown={(event) => event.stopPropagation()}>
+            <img
+              src={getDriveImageUrl(selectedDesign.imageUrl) ?? selectedDesign.imageUrl}
+              alt={`${selectedDesign.kind} design enlarged`}
+              className="max-h-[88vh] max-w-full rounded-xl bg-white object-contain shadow-2xl"
+            />
+            <button
+              type="button"
+              onClick={() => setSelectedDesign(null)}
+              aria-label="Close design image"
+              className="absolute -right-2 -top-2 grid h-10 w-10 place-items-center rounded-full bg-white text-xl text-foreground shadow-lg transition hover:bg-accent hover:text-white"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+      ) : null}
+
       {tasks.length > 0 && (
         <section className="mx-auto max-w-6xl px-4 pb-20">
           <h2 className="text-4xl font-bold">{t.workTitle}</h2>
@@ -312,11 +384,14 @@ export function HomePage() {
   );
 }
 
-function ServicesGrid() {
-  const { t } = useLang();
+function ServicesGrid({ services }: { services: Service[] }) {
+  const { t, language } = useLang();
+  const labels = services.length > 0
+    ? services.map((service) => language === "ar" ? service.nameAr || service.name : language === "bn" ? service.nameBn || service.name : service.name)
+    : t.services;
   return (
     <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-      {t.services.map((label, index) => (
+      {labels.map((label, index) => (
           <article
             key={label}
             className="group min-h-48 border border-slate-200 bg-[#fbfcf8] p-5 transition duration-300 hover:-translate-y-1 hover:border-accent hover:bg-accent hover:text-white hover:shadow-xl hover:shadow-accent/20"
