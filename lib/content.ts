@@ -67,7 +67,7 @@ export const copy = {
     "Google Business Profile setup",
     "Legal support from Bangladeshi advocates",
   ],
-} as const;
+};
 
 export const banglaCopy: typeof copy = {
   navHome: "হোম",
