@@ -30,7 +30,7 @@ export function ProjectDetail({ id }: { id: string }) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-20">
         <p className="text-slate-500">{t.projectsEmpty}</p>
-        <Link href="/#work" className="mt-4 inline-block text-accent">
+        <Link href="/" className="mt-4 inline-block text-accent">
           ← {t.navProjects}
         </Link>
       </div>
@@ -41,7 +41,7 @@ export function ProjectDetail({ id }: { id: string }) {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-16">
-      <Link href="/#work" className="text-sm font-medium text-slate-400 hover:text-accent">
+      <Link href="/" className="text-sm font-medium text-slate-400 hover:text-accent">
         ← {t.navProjects}
       </Link>
       <SitePreview url={project.liveUrl} title={project.title} className="mt-8 h-80 rounded-3xl" />

@@ -1,6 +1,6 @@
 "use client";
 
-import { Children, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { Children, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { isFirebaseConfigured } from "@/lib/firebase";
 import { listCategories, listProjects, listReviews, listTasks, listVideos } from "@/lib/firestore";
@@ -48,13 +48,16 @@ export function HomePage() {
       .catch(() => undefined);
   }, []);
 
-  useEffect(() => {
-    const hash = window.location.hash.replace("#", "");
-    if (!hash) return;
-    const timer = window.setTimeout(() => {
-      document.getElementById(hash)?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 80);
-    return () => window.clearTimeout(timer);
+  useLayoutEffect(() => {
+    const previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+    if (window.location.hash) {
+      window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
+    }
+    window.scrollTo({ top: 0, behavior: "auto" });
+    return () => {
+      window.history.scrollRestoration = previousScrollRestoration;
+    };
   }, []);
 
   const categoryName = (id: string) => categories.find((c) => c.id === id)?.name ?? "";
@@ -86,7 +89,6 @@ export function HomePage() {
                 onClick={(event) => {
                   event.preventDefault();
                   document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
-                  window.history.replaceState(null, "", "/#contact");
                 }}
                 className="rounded-full bg-foreground px-6 py-3.5 text-sm font-semibold text-white shadow-xl shadow-slate-900/10 hover:-translate-y-0.5 hover:bg-accent"
               >
@@ -97,7 +99,6 @@ export function HomePage() {
                 onClick={(event) => {
                   event.preventDefault();
                   document.getElementById("work")?.scrollIntoView({ behavior: "smooth", block: "start" });
-                  window.history.replaceState(null, "", "/#work");
                 }}
                 className="border-b border-foreground/30 px-1 py-2 text-sm font-semibold text-foreground hover:border-accent hover:text-accent"
               >
@@ -314,12 +315,16 @@ export function HomePage() {
 function ServiceSlider() {
   const [activeIndex, setActiveIndex] = useState(0);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
+  const shouldScroll = useRef(false);
 
   useEffect(() => {
+    if (!shouldScroll.current) return;
+    shouldScroll.current = false;
     cardRefs.current[activeIndex]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
   }, [activeIndex]);
 
   function move(direction: -1 | 1) {
+    shouldScroll.current = true;
     setActiveIndex((current) => (current + direction + services.length) % services.length);
   }
 
@@ -368,13 +373,17 @@ function ServiceSlider() {
 function CardSlider({ items, cardClass = "w-[280px] sm:w-[300px]" }: { items: ReactNode[]; cardClass?: string }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const shouldScroll = useRef(false);
   const cards = Children.toArray(items);
 
   useEffect(() => {
+    if (!shouldScroll.current) return;
+    shouldScroll.current = false;
     cardRefs.current[activeIndex]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
   }, [activeIndex]);
 
   function move(direction: -1 | 1) {
+    shouldScroll.current = true;
     setActiveIndex((current) => (current + direction + cards.length) % cards.length);
   }
 
@@ -422,7 +431,7 @@ export function ProjectCard({ project, category }: { project: Project; category?
   const { t } = useLang();
 
   return (
-    <article className="group overflow-hidden border border-slate-200 bg-[#fbfcf8] shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+    <article className="group overflow-hidden rounded-2xl border border-slate-200 bg-[#fbfcf8] shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
       <SitePreview url={project.liveUrl} title={project.title} className="h-52" />
       <div className="p-5">
         <div className="flex items-center justify-between gap-2 text-[10px] font-semibold tracking-[0.2em] uppercase text-accent">

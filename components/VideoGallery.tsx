@@ -24,8 +24,11 @@ export function VideoGallery({ videos }: { videos: VideoEntry[] }) {
   const [selected, setSelected] = useState<VideoEntry | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const cardRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const shouldScroll = useRef(false);
 
   useEffect(() => {
+    if (!shouldScroll.current) return;
+    shouldScroll.current = false;
     cardRefs.current[activeIndex]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
   }, [activeIndex]);
 
@@ -49,8 +52,8 @@ export function VideoGallery({ videos }: { videos: VideoEntry[] }) {
       <div className="mb-4 flex items-center justify-between gap-4">
         <p className="text-sm text-slate-500">{String(activeIndex + 1).padStart(2, "0")} / {String(videos.length).padStart(2, "0")}</p>
         <div className="flex gap-2">
-          <button type="button" onClick={() => setActiveIndex((current) => (current - 1 + videos.length) % videos.length)} aria-label="Previous video" className="grid h-11 w-11 place-items-center rounded-full border border-slate-300 text-lg text-foreground transition hover:border-accent hover:bg-accent hover:text-white">←</button>
-          <button type="button" onClick={() => setActiveIndex((current) => (current + 1) % videos.length)} aria-label="Next video" className="grid h-11 w-11 place-items-center rounded-full border border-slate-300 text-lg text-foreground transition hover:border-accent hover:bg-accent hover:text-white">→</button>
+          <button type="button" onClick={() => { shouldScroll.current = true; setActiveIndex((current) => (current - 1 + videos.length) % videos.length); }} aria-label="Previous video" className="grid h-11 w-11 place-items-center rounded-full border border-slate-300 text-lg text-foreground transition hover:border-accent hover:bg-accent hover:text-white">←</button>
+          <button type="button" onClick={() => { shouldScroll.current = true; setActiveIndex((current) => (current + 1) % videos.length); }} aria-label="Next video" className="grid h-11 w-11 place-items-center rounded-full border border-slate-300 text-lg text-foreground transition hover:border-accent hover:bg-accent hover:text-white">→</button>
         </div>
       </div>
       <div className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
