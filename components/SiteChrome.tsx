@@ -40,15 +40,15 @@ function SectionLink({
 }
 
 export function SiteHeader() {
-  const { t } = useLang();
+  const { t, toggleLanguage } = useLang();
   const pathname = usePathname();
   const [active, setActive] = useState("home");
   const [menuOpen, setMenuOpen] = useState(false);
   const links = [
     { id: "home", label: t.navHome },
-    { id: "services", label: "Services" },
+    { id: "services", label: t.navServices },
     { id: "work", label: t.navProjects },
-    { id: "reviews", label: "Reviews" },
+    { id: "reviews", label: t.navReviews },
     { id: "contact", label: t.navContact },
   ];
 
@@ -81,8 +81,16 @@ export function SiteHeader() {
           <BrandLogo className="h-9 w-auto mix-blend-multiply sm:h-11" priority />
           <span className="sr-only">{brand.legalName}</span>
         </SectionLink>
-        <p className="hidden text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400 lg:block">Independent digital studio / KSA + BD</p>
+        <p className="hidden text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400 lg:block">{t.headerDescriptor}</p>
         <div className="flex items-center gap-2 sm:order-4">
+          <button
+            type="button"
+            onClick={toggleLanguage}
+            aria-label={`Switch language to ${t.languageLabel}`}
+            className="border border-slate-300 px-3 py-2 text-xs font-semibold text-foreground hover:border-accent hover:text-accent"
+          >
+            {t.languageLabel}
+          </button>
           <button
             type="button"
             aria-expanded={menuOpen}
@@ -90,7 +98,7 @@ export function SiteHeader() {
             onClick={() => setMenuOpen((open) => !open)}
             className="border border-slate-300 px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-foreground sm:hidden"
           >
-            {menuOpen ? "Close" : "Menu"}
+            {menuOpen ? t.menuClose : t.menuOpen}
           </button>
           <SectionLink
             id="contact"

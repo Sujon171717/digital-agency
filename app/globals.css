@@ -38,6 +38,10 @@ body {
   background-size: 48px 48px;
 }
 
+html[lang="bn"] body {
+  font-family: var(--font-tiro-bangla), "Times New Roman", serif;
+}
+
 a,
 button {
   transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease, opacity 180ms ease, transform 180ms ease, box-shadow 180ms ease;
@@ -47,6 +51,10 @@ button {
   font-family: "Times New Roman", Times, serif;
   font-weight: 400;
   letter-spacing: 0;
+}
+
+html[lang="bn"] .font-display {
+  font-family: var(--font-tiro-bangla), serif;
 }
 
 .eyebrow {

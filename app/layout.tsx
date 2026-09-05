@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Outfit } from "next/font/google";
+import { Instrument_Serif, Outfit, Tiro_Bangla } from "next/font/google";
 import { AuthProvider } from "@/components/AuthProvider";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
@@ -16,6 +16,12 @@ const instrument = Instrument_Serif({
   weight: "400",
 });
 
+const tiroBangla = Tiro_Bangla({
+  variable: "--font-tiro-bangla",
+  subsets: ["bengali"],
+  weight: "400",
+});
+
 export const metadata: Metadata = {
   title: "BST Business Support Technology Ltd | Websites, Ads & Growth",
   description:
@@ -24,7 +30,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${outfit.variable} ${instrument.variable} h-full antialiased`}>
+    <html lang="en" className={`${outfit.variable} ${instrument.variable} ${tiroBangla.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <LanguageProvider>
           <AuthProvider>

@@ -4,7 +4,7 @@ import { Children, useEffect, useLayoutEffect, useMemo, useRef, useState, type R
 import Link from "next/link";
 import { isFirebaseConfigured } from "@/lib/firebase";
 import { listCategories, listProjects, listReviews, listTasks, listVideos } from "@/lib/firestore";
-import { brand, services } from "@/lib/content";
+import { brand } from "@/lib/content";
 import type { Category, Project, Review, Task, VideoEntry } from "@/lib/types";
 import { useLang } from "./LanguageProvider";
 import { HeroPrism } from "./HeroPrism";
@@ -13,7 +13,7 @@ import { VideoGallery } from "./VideoGallery";
 import { getDriveImageFallbackUrl, getDriveImageUrl } from "@/lib/video";
 
 export function HomePage() {
-  const { t } = useLang();
+  const { t, language } = useLang();
   const [projects, setProjects] = useState<Project[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -79,10 +79,10 @@ export function HomePage() {
             <p className="eyebrow mb-5">
               {t.heroKicker}
             </p>
-            <h1 className="font-display max-w-3xl text-5xl leading-[0.98] text-foreground sm:text-[3.4rem] md:text-[4.4rem] lg:text-[5rem]">
-              Digital work with <span className="font-display text-accent">real</span> commercial weight.
+            <h1 className={`font-display max-w-3xl leading-[0.98] text-foreground ${language === "bn" ? "text-4xl sm:text-[2.8rem] md:text-[3.5rem] lg:text-[4rem]" : "text-5xl sm:text-[3.4rem] md:text-[4.4rem] lg:text-[5rem]"}`}>
+              A professional digital presence that wins customers.
             </h1>
-            <p className="mt-7 max-w-xl text-base leading-7 text-slate-600 md:text-lg md:leading-8">{t.heroBody}</p>
+            <p className="mt-7 max-w-xl text-base leading-7 text-slate-600 md:text-lg md:leading-8">We design conversion-focused websites and run full-funnel digital marketing — paid ads, SEO, social, and WhatsApp automation — so your brand looks credible and generates qualified leads.</p>
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <a
                 href="#contact"
@@ -136,13 +136,13 @@ export function HomePage() {
           <h2 className="mt-4 max-w-2xl text-4xl font-semibold leading-tight tracking-[-0.03em] md:text-6xl">Built for the moment your customer decides.</h2>
           <p className="mt-5 max-w-2xl text-slate-600">{t.servicesIntro}</p>
         </div>
-        <ServiceSlider />
+        <ServicesGrid />
       </section>
 
       <section className="mx-auto grid max-w-7xl gap-px border-y border-slate-200 bg-slate-200 md:grid-cols-3">
         <article className="bg-foreground p-8 text-white md:col-span-2 md:p-12">
           <p className="eyebrow text-accent/80">Our point of view</p>
-          <h2 className="mt-5 max-w-2xl text-4xl font-semibold leading-tight md:text-5xl">{t.focusTitle}</h2>
+          <h2 className={`mt-5 max-w-2xl font-semibold leading-tight ${language === "bn" ? "text-3xl md:text-4xl" : "text-4xl md:text-5xl"}`}>{t.focusTitle}</h2>
           <p className="mt-5 max-w-2xl leading-8 text-white/70">{t.focusBody}</p>
         </article>
         <article className="bg-soft p-8 md:p-12">
@@ -156,9 +156,9 @@ export function HomePage() {
         <div className="section-rule grid gap-10 pt-5 md:grid-cols-[0.8fr_1.2fr]">
           <div>
             <p className="eyebrow">How we work</p>
-            <h2 className="mt-4 text-4xl font-semibold leading-tight tracking-[-0.03em] md:text-5xl">{t.teamTitle}</h2>
+            <h2 className={`mt-4 font-semibold leading-tight tracking-[-0.03em] ${language === "bn" ? "text-3xl md:text-4xl" : "text-4xl md:text-5xl"}`}>{t.teamTitle}</h2>
           </div>
-          <p className="max-w-2xl text-xl leading-9 text-slate-600 md:text-2xl">{t.teamBody}</p>
+          <p className={`max-w-2xl leading-9 text-slate-600 ${language === "bn" ? "text-base md:text-xl" : "text-xl md:text-2xl"}`}>{t.teamBody}</p>
         </div>
       </section>
 
@@ -166,7 +166,7 @@ export function HomePage() {
         <div className="section-rule flex flex-col gap-5 pt-5 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="eyebrow">Selected work</p>
-            <h2 className="mt-4 text-4xl font-semibold tracking-[-0.03em] md:text-6xl">{t.projectsTitle}</h2>
+            <h2 className={`mt-4 font-semibold tracking-[-0.03em] ${language === "bn" ? "text-2xl md:text-4xl" : "text-3xl md:text-5xl"}`}>{t.projectsTitle}</h2>
           </div>
           <p className="max-w-xs text-sm leading-6 text-slate-500">Digital experiences, campaigns, and systems made to move a business forward.</p>
         </div>
@@ -203,7 +203,7 @@ export function HomePage() {
       {videos.length > 0 && (
         <section id="video-editing" className="mx-auto max-w-6xl px-4 pb-20">
           <p className="eyebrow">Motion and film</p>
-          <h2 className="mt-4 text-4xl font-semibold tracking-[-0.03em] md:text-6xl">Video Editing</h2>
+          <h2 className={`mt-4 font-semibold tracking-[-0.03em] ${language === "bn" ? "text-2xl md:text-4xl" : "text-3xl md:text-5xl"}`}>Video Editing</h2>
           <div className="mt-8">
             <VideoGallery videos={videos} />
           </div>
@@ -213,7 +213,7 @@ export function HomePage() {
       {reviews.length > 0 && (
         <section id="reviews" className="mx-auto max-w-6xl px-4 pb-20">
           <p className="eyebrow">Client perspective</p>
-          <h2 className="mt-4 text-4xl font-semibold tracking-[-0.03em] md:text-6xl">Reviews</h2>
+          <h2 className={`mt-4 font-semibold tracking-[-0.03em] ${language === "bn" ? "text-2xl md:text-4xl" : "text-4xl md:text-6xl"}`}>Reviews</h2>
           <div className="mt-8">
             <CardSlider cardClass="w-[280px] sm:w-[300px]" items={reviews.map((review) => (
               <button
@@ -283,7 +283,7 @@ export function HomePage() {
       <section id="contact" className="mx-auto max-w-7xl border-t border-slate-200 px-5 pb-28 pt-20 md:px-8">
         <div className="max-w-4xl">
           <p className="eyebrow">{brand.tagline}</p>
-          <h2 className="mt-5 font-display text-6xl leading-[0.95] text-foreground md:text-8xl">{t.contactTitle}</h2>
+          <h2 className={`mt-5 font-display leading-[0.95] text-foreground ${language === "bn" ? "text-3xl md:text-5xl" : "text-4xl md:text-6xl"}`}>{t.contactTitle}</h2>
           <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-600">{t.contactBody}</p>
         </div>
         <div className="mt-10 flex flex-wrap gap-3">
@@ -312,60 +312,20 @@ export function HomePage() {
   );
 }
 
-function ServiceSlider() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const cardRefs = useRef<(HTMLElement | null)[]>([]);
-  const shouldScroll = useRef(false);
-
-  useEffect(() => {
-    if (!shouldScroll.current) return;
-    shouldScroll.current = false;
-    cardRefs.current[activeIndex]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
-  }, [activeIndex]);
-
-  function move(direction: -1 | 1) {
-    shouldScroll.current = true;
-    setActiveIndex((current) => (current + direction + services.length) % services.length);
-  }
-
+function ServicesGrid() {
+  const { t } = useLang();
   return (
-    <div className="mt-12">
-      <div className="flex items-center justify-between gap-4">
-        <p className="text-sm text-slate-500">{String(activeIndex + 1).padStart(2, "0")} / {String(services.length).padStart(2, "0")}</p>
-        <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={() => move(-1)}
-            aria-label="Previous service"
-            className="grid h-11 w-11 place-items-center rounded-full border border-slate-300 text-lg text-foreground transition hover:border-accent hover:bg-accent hover:text-white"
-          >
-            ←
-          </button>
-          <button
-            type="button"
-            onClick={() => move(1)}
-            aria-label="Next service"
-            className="grid h-11 w-11 place-items-center rounded-full border border-slate-300 text-lg text-foreground transition hover:border-accent hover:bg-accent hover:text-white"
-          >
-            →
-          </button>
-        </div>
-      </div>
-      <div className="mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {services.map((service, index) => (
+    <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      {t.services.map((label, index) => (
           <article
-            key={service.label}
-            ref={(element) => {
-              cardRefs.current[index] = element;
-            }}
-            className={`group min-h-64 w-[min(82vw,360px)] shrink-0 snap-start border p-6 transition duration-300 sm:w-[min(44vw,390px)] lg:w-[calc((100%-2rem)/3)] ${index === activeIndex ? "border-accent bg-accent text-white shadow-xl shadow-accent/20" : "border-slate-200 bg-[#fbfcf8] hover:border-accent/60"}`}
+            key={label}
+            className="group min-h-48 border border-slate-200 bg-[#fbfcf8] p-5 transition duration-300 hover:-translate-y-1 hover:border-accent hover:bg-accent hover:text-white hover:shadow-xl hover:shadow-accent/20"
           >
-            <p className={`text-[11px] font-semibold tracking-[0.3em] ${index === activeIndex ? "text-white/70" : "text-accent"}`}>{service.icon}</p>
-            <h3 className="mt-16 max-w-xs text-xl font-semibold leading-7">{service.label}</h3>
-            <p className={`mt-5 text-xs uppercase tracking-[0.16em] ${index === activeIndex ? "text-white/70" : "text-slate-400"}`}>BST capability</p>
+            <p className="text-[11px] font-semibold tracking-[0.3em] text-accent group-hover:text-white/70">{String(index + 1).padStart(2, "0")}</p>
+            <h3 className="mt-10 max-w-xs text-lg font-semibold leading-6">{label}</h3>
+            <p className="mt-4 text-xs uppercase tracking-[0.16em] text-slate-400 group-hover:text-white/70">BST capability</p>
           </article>
-        ))}
-      </div>
+      ))}
     </div>
   );
 }
