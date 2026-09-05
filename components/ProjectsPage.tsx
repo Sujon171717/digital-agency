@@ -68,7 +68,7 @@ export function ProjectsPage() {
       )}
       {visible.length > 10 ? (
         <button type="button" onClick={() => setShowAll((value) => !value)} className="mt-8 rounded-full border border-slate-200 px-5 py-2 text-sm font-semibold text-slate-700 hover:border-accent hover:text-accent">
-          {showAll ? "Show Less" : "See All Projects"}
+          {showAll ? t.showLess : t.seeAllProjects}
         </button>
       ) : null}
     </div>

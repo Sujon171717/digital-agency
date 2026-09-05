@@ -117,31 +117,31 @@ export function HomePage() {
           <div className="relative reveal-up [animation-delay:140ms]">
             <div className="blob -right-8 top-6 h-80 w-80 opacity-80" />
             <HeroPrism />
-            <div className="absolute left-0 top-8 border border-foreground/10 bg-[#f7f7f3]/90 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] shadow-sm">Web</div>
-            <div className="absolute right-0 top-16 border border-foreground/10 bg-[#f7f7f3]/90 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] shadow-sm">Ads</div>
-            <div className="absolute bottom-10 left-6 border border-foreground/10 bg-[#f7f7f3]/90 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] shadow-sm">SEO</div>
-            <div className="absolute bottom-16 right-8 border border-foreground/10 bg-[#f7f7f3]/90 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] shadow-sm">Brand</div>
+            <div className="absolute left-0 top-8 border border-foreground/10 bg-[#f7f7f3]/90 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] shadow-sm">{t.web}</div>
+            <div className="absolute right-0 top-16 border border-foreground/10 bg-[#f7f7f3]/90 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] shadow-sm">{t.ads}</div>
+            <div className="absolute bottom-10 left-6 border border-foreground/10 bg-[#f7f7f3]/90 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] shadow-sm">{t.seo}</div>
+            <div className="absolute bottom-16 right-8 border border-foreground/10 bg-[#f7f7f3]/90 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] shadow-sm">{t.brand}</div>
           </div>
         </div>
         <div className="flex justify-center pb-12 text-center md:pb-16">
           <div className="flex flex-col items-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent">Track record</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent">{t.trackRecord}</p>
             <CountUp value={completedOrders} />
-            <p className="mt-1 text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">Completed orders</p>
+            <p className="mt-1 text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">{t.completedOrders}</p>
           </div>
         </div>
       </section>
 
       <div className="overflow-hidden border-y border-slate-100 bg-soft py-3">
         <p className="marquee whitespace-nowrap text-xs tracking-[0.45em] uppercase text-slate-400">
-          {` ${brand.legalName} · Websites · Paid media · SEO · Brand · ${brand.tagline} · `.repeat(6)}
+          {` ${brand.legalName} · ${t.marquee} · ${t.tagline} · `.repeat(6)}
         </p>
       </div>
 
       <section id="services" className="mx-auto max-w-7xl px-5 py-24 md:px-8">
         <div className="section-rule pt-5">
-          <p className="eyebrow">What we do</p>
-          <h2 className="mt-4 max-w-2xl text-4xl font-semibold leading-tight tracking-[-0.03em] md:text-6xl">Built for the moment your customer decides.</h2>
+          <p className="eyebrow">{t.whatWeDo}</p>
+          <h2 className="mt-4 max-w-2xl text-4xl font-semibold leading-tight tracking-[-0.03em] md:text-6xl">{t.servicesHeadline}</h2>
           <p className="mt-5 max-w-2xl text-slate-600">{t.servicesIntro}</p>
         </div>
         <ServicesGrid services={services} />
@@ -149,12 +149,12 @@ export function HomePage() {
 
       <section className="mx-auto grid max-w-7xl gap-px border-y border-slate-200 bg-slate-200 md:grid-cols-3">
         <article className="bg-foreground p-8 text-white md:col-span-2 md:p-12">
-          <p className="eyebrow text-accent/80">Our point of view</p>
+          <p className="eyebrow text-accent/80">{t.pointOfView}</p>
           <h2 className={`mt-5 max-w-2xl font-semibold leading-tight ${language !== "en" ? "text-3xl md:text-4xl" : "text-4xl md:text-5xl"}`}>{t.focusTitle}</h2>
           <p className="mt-5 max-w-2xl leading-8 text-white/70">{t.focusBody}</p>
         </article>
         <article className="bg-soft p-8 md:p-12">
-          <p className="eyebrow">Beyond the brief</p>
+          <p className="eyebrow">{t.beyondBrief}</p>
           <h2 className="mt-5 text-3xl font-semibold leading-tight">{t.legalTitle}</h2>
           <p className="mt-5 leading-8 text-slate-600">{t.legalBody}</p>
         </article>
@@ -163,7 +163,7 @@ export function HomePage() {
       <section className="mx-auto max-w-7xl px-5 py-24 md:px-8">
         <div className="section-rule grid gap-10 pt-5 md:grid-cols-[0.8fr_1.2fr]">
           <div>
-            <p className="eyebrow">How we work</p>
+            <p className="eyebrow">{t.howWeWork}</p>
             <h2 className={`mt-4 font-semibold leading-tight tracking-[-0.03em] ${language !== "en" ? "text-3xl md:text-4xl" : "text-4xl md:text-5xl"}`}>{t.teamTitle}</h2>
           </div>
           <p className={`max-w-2xl leading-9 text-slate-600 ${language !== "en" ? "text-base md:text-xl" : "text-xl md:text-2xl"}`}>{t.teamBody}</p>
@@ -173,10 +173,10 @@ export function HomePage() {
       <section id="work" className="mx-auto max-w-7xl px-5 pb-24 md:px-8">
         <div className="section-rule flex flex-col gap-5 pt-5 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="eyebrow">Selected work</p>
+            <p className="eyebrow">{t.selectedWork}</p>
             <h2 className={`mt-4 font-semibold tracking-[-0.03em] ${language === "bn" ? "text-2xl md:text-4xl" : "text-3xl md:text-5xl"}`}>{t.projectsTitle}</h2>
           </div>
-          <p className="max-w-xs text-sm leading-6 text-slate-500">Digital experiences, campaigns, and systems made to move a business forward.</p>
+          <p className="max-w-xs text-sm leading-6 text-slate-500">{t.workDescription}</p>
         </div>
         <div className="mt-8 flex flex-wrap gap-2">
           <button
@@ -210,8 +210,8 @@ export function HomePage() {
 
       {videos.length > 0 && (
         <section id="video-editing" className="mx-auto max-w-6xl px-4 pb-20">
-          <p className="eyebrow">Motion and film</p>
-          <h2 className={`mt-4 font-semibold tracking-[-0.03em] ${language === "bn" ? "text-2xl md:text-4xl" : "text-3xl md:text-5xl"}`}>Video Editing</h2>
+          <p className="eyebrow">{t.motionFilm}</p>
+          <h2 className={`mt-4 font-semibold tracking-[-0.03em] ${language !== "en" ? "text-2xl md:text-4xl" : "text-3xl md:text-5xl"}`}>{t.videoEditing}</h2>
           <div className="mt-8">
             <VideoGallery videos={videos} />
           </div>
@@ -220,27 +220,27 @@ export function HomePage() {
 
       {reviews.length > 0 && (
         <section id="reviews" className="mx-auto max-w-6xl px-4 pb-20">
-          <p className="eyebrow">Client perspective</p>
-          <h2 className={`mt-4 font-semibold tracking-[-0.03em] ${language === "bn" ? "text-2xl md:text-4xl" : "text-4xl md:text-6xl"}`}>Reviews</h2>
+          <p className="eyebrow">{t.clientPerspective}</p>
+          <h2 className={`mt-4 font-semibold tracking-[-0.03em] ${language !== "en" ? "text-2xl md:text-4xl" : "text-4xl md:text-6xl"}`}>{t.reviews}</h2>
           <div className="mt-8">
             <CardSlider cardClass="w-[280px] sm:w-[300px]" items={reviews.map((review) => (
               <button
                 key={review.id}
                 type="button"
                 onClick={() => setSelectedReview(review)}
-                aria-label="Open review image"
+                aria-label={t.openReview}
                 className="group w-full max-w-[280px] overflow-hidden rounded-2xl border border-slate-200 bg-white text-left shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
               >
                 <img
                   src={getDriveImageUrl(review.imageUrl) ?? review.imageUrl}
-                  alt="Client review"
+                  alt={t.clientReview}
                   onError={(event) => {
                     const fallback = getDriveImageFallbackUrl(review.imageUrl);
                     if (fallback && event.currentTarget.src !== fallback) event.currentTarget.src = fallback;
                   }}
                   className="h-52 w-full object-contain object-top"
                 />
-                <span className="block border-t border-slate-100 px-4 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 transition group-hover:text-accent">View full review</span>
+                <span className="block border-t border-slate-100 px-4 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 transition group-hover:text-accent">{t.viewFullReview}</span>
               </button>
             ))} />
           </div>
@@ -252,19 +252,19 @@ export function HomePage() {
           className="fixed inset-0 z-50 grid place-items-center bg-foreground/85 p-4 backdrop-blur-md"
           role="dialog"
           aria-modal="true"
-          aria-label="Review image"
+          aria-label={t.reviewImage}
           onMouseDown={() => setSelectedReview(null)}
         >
           <div className="relative flex max-h-[94vh] max-w-5xl items-center justify-center" onMouseDown={(event) => event.stopPropagation()}>
             <img
               src={getDriveImageUrl(selectedReview.imageUrl) ?? selectedReview.imageUrl}
-              alt="Client review enlarged"
+              alt={t.clientReviewEnlarged}
               className="max-h-[88vh] max-w-full rounded-xl bg-white object-contain shadow-2xl"
             />
             <button
               type="button"
               onClick={() => setSelectedReview(null)}
-              aria-label="Close review image"
+              aria-label={t.closeReview}
               className="absolute -right-2 -top-2 grid h-10 w-10 place-items-center rounded-full bg-white text-xl text-foreground shadow-lg transition hover:bg-accent hover:text-white"
             >
               ×
@@ -275,21 +275,21 @@ export function HomePage() {
 
       {designAssets.length > 0 && (
         <section className="mx-auto max-w-6xl px-4 pb-20">
-          <p className="eyebrow">Visual identity</p>
-          <h2 className={`mt-4 font-semibold tracking-[-0.03em] ${language !== "en" ? "text-2xl md:text-4xl" : "text-4xl md:text-6xl"}`}>Poster and Banner Design</h2>
+          <p className="eyebrow">{t.posterBannerDesign}</p>
+          <h2 className={`mt-4 font-semibold tracking-[-0.03em] ${language !== "en" ? "text-2xl md:text-4xl" : "text-4xl md:text-6xl"}`}>{t.posterBannerDesign}</h2>
           <div className="mt-8 grid gap-10">
             {(["poster", "banner"] as const).map((kind) => {
               const designs = designAssets.filter((asset) => asset.kind === kind);
               if (designs.length === 0) return null;
               return (
                 <div key={kind}>
-                  <h3 className="mb-4 text-xl font-semibold capitalize">{kind}s</h3>
+                  <h3 className="mb-4 text-xl font-semibold">{kind === "poster" ? t.posters : t.banners}</h3>
                   <CardSlider items={designs.map((design) => (
                     <button
                       key={design.id}
                       type="button"
                       onClick={() => setSelectedDesign(design)}
-                      aria-label={`Open ${kind} design`}
+                      aria-label={t.openDesign}
                       className="group w-full max-w-[280px] overflow-hidden rounded-2xl border border-slate-200 bg-white text-left shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
                     >
                       <img
@@ -301,7 +301,7 @@ export function HomePage() {
                         }}
                         className="h-52 w-full object-cover"
                       />
-                      <span className="block border-t border-slate-100 px-4 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 transition group-hover:text-accent">View full design</span>
+                      <span className="block border-t border-slate-100 px-4 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 transition group-hover:text-accent">{t.viewFullDesign}</span>
                     </button>
                   ))} />
                 </div>
@@ -316,19 +316,19 @@ export function HomePage() {
           className="fixed inset-0 z-50 grid place-items-center bg-foreground/85 p-4 backdrop-blur-md"
           role="dialog"
           aria-modal="true"
-          aria-label="Design image"
+          aria-label={t.designImage}
           onMouseDown={() => setSelectedDesign(null)}
         >
           <div className="relative flex max-h-[94vh] max-w-5xl items-center justify-center" onMouseDown={(event) => event.stopPropagation()}>
             <img
               src={getDriveImageUrl(selectedDesign.imageUrl) ?? selectedDesign.imageUrl}
-              alt={`${selectedDesign.kind} design enlarged`}
+              alt={t.designImageEnlarged}
               className="max-h-[88vh] max-w-full rounded-xl bg-white object-contain shadow-2xl"
             />
             <button
               type="button"
               onClick={() => setSelectedDesign(null)}
-              aria-label="Close design image"
+              aria-label={t.closeDesign}
               className="absolute -right-2 -top-2 grid h-10 w-10 place-items-center rounded-full bg-white text-xl text-foreground shadow-lg transition hover:bg-accent hover:text-white"
             >
               ×
@@ -354,7 +354,7 @@ export function HomePage() {
 
       <section id="contact" className="mx-auto max-w-7xl border-t border-slate-200 px-5 pb-28 pt-20 md:px-8">
         <div className="max-w-4xl">
-          <p className="eyebrow">{brand.tagline}</p>
+          <p className="eyebrow">{t.tagline}</p>
           <h2 className={`mt-5 font-display leading-[0.95] text-foreground ${language === "bn" ? "text-3xl md:text-5xl" : "text-4xl md:text-6xl"}`}>{t.contactTitle}</h2>
           <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-600">{t.contactBody}</p>
         </div>
@@ -375,8 +375,8 @@ export function HomePage() {
           </a>
         </div>
         <div className="mt-16 grid gap-4 border-t border-slate-200 pt-6 text-sm text-slate-600 sm:grid-cols-3">
-          <p>WhatsApp: +{brand.whatsapp}</p>
-          <p className="mt-2">Email: {brand.email}</p>
+          <p>{t.whatsapp}: +{brand.whatsapp}</p>
+          <p className="mt-2">{t.email}: {brand.email}</p>
           <p className="mt-6 text-sm font-semibold tracking-[0.2em] uppercase text-accent">{t.heroKicker}</p>
         </div>
       </section>
@@ -398,7 +398,7 @@ function ServicesGrid({ services }: { services: Service[] }) {
           >
             <p className="text-[11px] font-semibold tracking-[0.3em] text-accent group-hover:text-white/70">{String(index + 1).padStart(2, "0")}</p>
             <h3 className="mt-10 max-w-xs text-lg font-semibold leading-6">{label}</h3>
-            <p className="mt-4 text-xs uppercase tracking-[0.16em] text-slate-400 group-hover:text-white/70">BST capability</p>
+            <p className="mt-4 text-xs uppercase tracking-[0.16em] text-slate-400 group-hover:text-white/70">{t.capability}</p>
           </article>
       ))}
     </div>
@@ -406,6 +406,7 @@ function ServicesGrid({ services }: { services: Service[] }) {
 }
 
 function CardSlider({ items, cardClass = "w-[280px] sm:w-[300px]" }: { items: ReactNode[]; cardClass?: string }) {
+  const { t } = useLang();
   const [activeIndex, setActiveIndex] = useState(0);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const shouldScroll = useRef(false);
@@ -427,8 +428,8 @@ function CardSlider({ items, cardClass = "w-[280px] sm:w-[300px]" }: { items: Re
       <div className="mb-4 flex items-center justify-between gap-4">
         <p className="text-sm text-slate-500">{String(activeIndex + 1).padStart(2, "0")} / {String(cards.length).padStart(2, "0")}</p>
         <div className="flex gap-2">
-          <button type="button" onClick={() => move(-1)} aria-label="Previous item" className="grid h-11 w-11 place-items-center rounded-full border border-slate-300 text-lg text-foreground transition hover:border-accent hover:bg-accent hover:text-white">←</button>
-          <button type="button" onClick={() => move(1)} aria-label="Next item" className="grid h-11 w-11 place-items-center rounded-full border border-slate-300 text-lg text-foreground transition hover:border-accent hover:bg-accent hover:text-white">→</button>
+          <button type="button" onClick={() => move(-1)} aria-label={t.previous} className="grid h-11 w-11 place-items-center rounded-full border border-slate-300 text-lg text-foreground transition hover:border-accent hover:bg-accent hover:text-white">←</button>
+          <button type="button" onClick={() => move(1)} aria-label={t.next} className="grid h-11 w-11 place-items-center rounded-full border border-slate-300 text-lg text-foreground transition hover:border-accent hover:bg-accent hover:text-white">→</button>
         </div>
       </div>
       <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">

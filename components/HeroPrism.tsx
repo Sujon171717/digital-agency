@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { brand } from "@/lib/content";
+import { useLang } from "./LanguageProvider";
 import { useSectionProgress } from "@/lib/useSectionProgress";
 
 export function HeroPrism() {
+  const { t } = useLang();
   const { ref, progress } = useSectionProgress<HTMLDivElement>();
   const [pointer, setPointer] = useState({ x: 0, y: 0 });
 
@@ -34,25 +35,25 @@ export function HeroPrism() {
       >
         <div className="prism-face front">
           <div>
-            <p className="eyebrow">Digital presence</p>
+            <p className="eyebrow">{t.offerTitle}</p>
             <p className="mt-2 font-display text-5xl text-slate-900">1,000 SAR</p>
-            <p className="mt-2 text-xs text-slate-500">Built to convert attention into action.</p>
+            <p className="mt-2 text-xs text-slate-500">{t.offerBody}</p>
           </div>
         </div>
         <div className="prism-face right">
-          <p className="text-sm leading-6 text-slate-600">Paid media, SEO, and brand systems.</p>
+          <p className="text-sm leading-6 text-slate-600">{t.servicesIntro}</p>
         </div>
         <div className="prism-face back">
           <p className="text-3xl font-bold text-accent">BST</p>
         </div>
         <div className="prism-face left">
-          <p className="text-sm leading-6 text-slate-600">{brand.tagline}</p>
+          <p className="text-sm leading-6 text-slate-600">{t.tagline}</p>
         </div>
         <div className="prism-face top">
-          <p className="text-xs tracking-[0.35em] uppercase text-accent">Support</p>
+          <p className="text-xs tracking-[0.35em] uppercase text-accent">{t.legalTitle}</p>
         </div>
         <div className="prism-face bottom">
-          <p className="text-xs tracking-[0.35em] uppercase text-accent">Technology</p>
+          <p className="text-xs tracking-[0.35em] uppercase text-accent">{t.navServices}</p>
         </div>
       </div>
     </div>

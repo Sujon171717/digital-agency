@@ -83,7 +83,7 @@ export function SiteHeader() {
         </SectionLink>
         <p className="hidden text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400 lg:block">{t.headerDescriptor}</p>
         <div className="flex items-center gap-2 sm:order-4">
-          <div className="flex items-center border border-slate-300" role="group" aria-label="Language">
+          <div className="flex items-center border border-slate-300" role="group" aria-label={t.switchLanguage}>
             {[
               ["ar", "العربية"],
               ["en", "English"],
