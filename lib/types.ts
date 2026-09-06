@@ -13,8 +13,8 @@ export interface Category {
 export interface Service {
   id: string;
   name: string;
-  nameBn?: string;
-  nameAr?: string;
+  banglaName?: string;
+  englishName?: string;
   slug: string;
   createdAt: number;
 }

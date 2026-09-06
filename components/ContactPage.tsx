@@ -10,7 +10,7 @@ export function ContactPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-20">
       <p className="text-sm font-semibold tracking-[0.2em] uppercase text-accent">{t.tagline}</p>
-      <h1 className="mt-4 text-5xl font-bold md:text-6xl">{t.contactTitle}</h1>
+      <h1 className="mt-4 text-3xl font-bold md:text-5xl">{t.contactTitle}</h1>
       <p className="mt-6 text-lg leading-8 text-slate-500">{t.contactBody}</p>
       <div className="mt-10 flex flex-wrap gap-3">
         <a

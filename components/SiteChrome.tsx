@@ -78,28 +78,17 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-[#f7f7f3]/85 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-3 gap-y-2 px-5 py-3 sm:flex-nowrap sm:gap-4 lg:px-8">
         <SectionLink id="home" className="flex min-w-0 items-center">
-          <BrandLogo className="h-9 w-auto mix-blend-multiply sm:h-11" priority />
+          <BrandLogo className="h-14 w-auto mix-blend-multiply sm:h-16 lg:h-20" priority />
           <span className="sr-only">{brand.legalName}</span>
         </SectionLink>
         <p className="hidden text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400 lg:block">{t.headerDescriptor}</p>
         <div className="flex items-center gap-2 sm:order-4">
-          <div className="flex items-center border border-slate-300" role="group" aria-label={t.switchLanguage}>
-            {[
-              ["ar", "العربية"],
-              ["en", "English"],
-              ["bn", "বাংলা"],
-            ].map(([value, label]) => (
-              <button
-                key={value}
-                type="button"
-                onClick={() => setLanguage(value as "ar" | "en" | "bn")}
-                aria-pressed={language === value}
-                className={`px-2.5 py-2 text-xs font-semibold transition-colors ${language === value ? "bg-foreground text-white" : "text-foreground hover:bg-soft hover:text-accent"}`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+          <label className="sr-only" htmlFor="language-switcher">{t.switchLanguage}</label>
+          <select id="language-switcher" value={language} onChange={(event) => setLanguage(event.target.value as typeof language)} className="border border-slate-300 bg-transparent px-2 py-2 text-xs font-semibold text-foreground outline-none">
+            <option value="ar">العربية</option>
+            <option value="bn">বাংলা</option>
+            <option value="en">English</option>
+          </select>
           <button
             type="button"
             aria-expanded={menuOpen}

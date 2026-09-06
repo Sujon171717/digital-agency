@@ -2,16 +2,16 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { AdminShell, Field, inputClass } from "@/components/AdminShell";
-import { arabicCopy, banglaCopy, copy } from "@/lib/content";
+import { copy } from "@/lib/content";
 import { createService, deleteService, listServices, updateService } from "@/lib/firestore";
 import type { Service } from "@/lib/types";
 
-const empty = { name: "", nameBn: "", nameAr: "", slug: "" };
+const empty = { name: "", banglaName: "", englishName: "", slug: "" };
 
-const defaultServices = copy.services.map((name, index) => ({
+const defaultServices = copy.services.map((name) => ({
   name,
-  nameBn: banglaCopy.services[index] ?? name,
-  nameAr: arabicCopy.services[index] ?? name,
+  banglaName: name,
+  englishName: name,
   slug: name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""),
 }));
 
@@ -56,14 +56,14 @@ export default function ServicesAdmin() {
       <h1 className="text-3xl font-semibold">Services</h1>
       <p className="mt-2 text-sm text-slate-500">Manage the services shown in the public Services section. Existing services are imported automatically the first time this page loads.</p>
       <form onSubmit={onSubmit} className="mt-6 grid gap-4 rounded-3xl border border-slate-100 bg-white p-5 md:grid-cols-2">
-        <Field label="English name">
+        <Field label="Arabic name">
           <input className={inputClass} required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value, slug: form.slug || e.target.value.toLowerCase().replace(/\s+/g, "-") })} />
         </Field>
         <Field label="Bangla name">
-          <input className={inputClass} value={form.nameBn} onChange={(e) => setForm({ ...form, nameBn: e.target.value })} />
+          <input className={inputClass} required value={form.banglaName} onChange={(e) => setForm({ ...form, banglaName: e.target.value })} />
         </Field>
-        <Field label="Arabic name">
-          <input className={inputClass} dir="rtl" value={form.nameAr} onChange={(e) => setForm({ ...form, nameAr: e.target.value })} />
+        <Field label="English name">
+          <input className={inputClass} required value={form.englishName} onChange={(e) => setForm({ ...form, englishName: e.target.value })} />
         </Field>
         <Field label="Slug">
           <input className={inputClass} required value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} />
@@ -82,8 +82,9 @@ export default function ServicesAdmin() {
         <table className="w-full text-left text-sm">
           <thead className="bg-soft text-slate-500">
             <tr>
-              <th className="px-4 py-3">Name</th>
               <th className="px-4 py-3">Arabic</th>
+              <th className="px-4 py-3">Bangla</th>
+              <th className="px-4 py-3">English</th>
               <th className="px-4 py-3" />
             </tr>
           </thead>
@@ -91,9 +92,10 @@ export default function ServicesAdmin() {
             {items.map((item) => (
               <tr key={item.id} className="border-t border-slate-100">
                 <td className="px-4 py-3">{item.name}</td>
-                <td className="px-4 py-3" dir="rtl">{item.nameAr || "—"}</td>
+                <td className="px-4 py-3">{item.banglaName || item.name}</td>
+                <td className="px-4 py-3">{item.englishName || item.name}</td>
                 <td className="px-4 py-3 text-right">
-                  <button className="mr-3 text-accent hover:underline" onClick={() => { setEditing(item.id); setForm({ name: item.name, nameBn: item.nameBn ?? "", nameAr: item.nameAr ?? "", slug: item.slug }); }}>
+                  <button className="mr-3 text-accent hover:underline" onClick={() => { setEditing(item.id); setForm({ name: item.name, banglaName: item.banglaName || item.name, englishName: item.englishName || item.name, slug: item.slug }); }}>
                     Edit
                   </button>
                   <button

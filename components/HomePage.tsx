@@ -13,7 +13,7 @@ import { VideoGallery } from "./VideoGallery";
 import { getDriveImageFallbackUrl, getDriveImageUrl } from "@/lib/video";
 
 export function HomePage() {
-  const { t, language } = useLang();
+  const { t } = useLang();
   const [projects, setProjects] = useState<Project[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -87,7 +87,7 @@ export function HomePage() {
             <p className="eyebrow mb-5">
               {t.heroKicker}
             </p>
-            <h1 className={`font-display max-w-3xl leading-[0.98] text-foreground ${language !== "en" ? "text-4xl sm:text-[2.8rem] md:text-[3.5rem] lg:text-[4rem]" : "text-5xl sm:text-[3.4rem] md:text-[4.4rem] lg:text-[5rem]"}`}>
+            <h1 className="font-display max-w-3xl text-5xl leading-[0.98] text-foreground sm:text-[3.4rem] md:text-[4.4rem] lg:text-[5rem]">
               {t.heroTitle}
             </h1>
             <p className="mt-7 max-w-xl text-base leading-7 text-slate-600 md:text-lg md:leading-8">{t.heroBody}</p>
@@ -150,7 +150,7 @@ export function HomePage() {
       <section className="mx-auto grid max-w-7xl gap-px border-y border-slate-200 bg-slate-200 md:grid-cols-3">
         <article className="bg-foreground p-8 text-white md:col-span-2 md:p-12">
           <p className="eyebrow text-accent/80">{t.pointOfView}</p>
-          <h2 className={`mt-5 max-w-2xl font-semibold leading-tight ${language !== "en" ? "text-3xl md:text-4xl" : "text-4xl md:text-5xl"}`}>{t.focusTitle}</h2>
+          <h2 className="mt-5 max-w-2xl text-4xl font-semibold leading-tight md:text-5xl">{t.focusTitle}</h2>
           <p className="mt-5 max-w-2xl leading-8 text-white/70">{t.focusBody}</p>
         </article>
         <article className="bg-soft p-8 md:p-12">
@@ -164,9 +164,9 @@ export function HomePage() {
         <div className="section-rule grid gap-10 pt-5 md:grid-cols-[0.8fr_1.2fr]">
           <div>
             <p className="eyebrow">{t.howWeWork}</p>
-            <h2 className={`mt-4 font-semibold leading-tight tracking-[-0.03em] ${language !== "en" ? "text-3xl md:text-4xl" : "text-4xl md:text-5xl"}`}>{t.teamTitle}</h2>
+            <h2 className="mt-4 text-4xl font-semibold leading-tight tracking-[-0.03em] md:text-5xl">{t.teamTitle}</h2>
           </div>
-          <p className={`max-w-2xl leading-9 text-slate-600 ${language !== "en" ? "text-base md:text-xl" : "text-xl md:text-2xl"}`}>{t.teamBody}</p>
+          <p className="max-w-2xl text-xl leading-9 text-slate-600 md:text-2xl">{t.teamBody}</p>
         </div>
       </section>
 
@@ -174,7 +174,7 @@ export function HomePage() {
         <div className="section-rule flex flex-col gap-5 pt-5 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="eyebrow">{t.selectedWork}</p>
-            <h2 className={`mt-4 font-semibold tracking-[-0.03em] ${language === "bn" ? "text-2xl md:text-4xl" : "text-3xl md:text-5xl"}`}>{t.projectsTitle}</h2>
+            <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] md:text-5xl">{t.projectsTitle}</h2>
           </div>
           <p className="max-w-xs text-sm leading-6 text-slate-500">{t.workDescription}</p>
         </div>
@@ -211,7 +211,7 @@ export function HomePage() {
       {videos.length > 0 && (
         <section id="video-editing" className="mx-auto max-w-6xl px-4 pb-20">
           <p className="eyebrow">{t.motionFilm}</p>
-          <h2 className={`mt-4 font-semibold tracking-[-0.03em] ${language !== "en" ? "text-2xl md:text-4xl" : "text-3xl md:text-5xl"}`}>{t.videoEditing}</h2>
+          <h2 className="bangla-section-heading mt-4 text-3xl font-semibold tracking-[-0.03em] md:text-5xl">{t.videoEditing}</h2>
           <div className="mt-8">
             <VideoGallery videos={videos} />
           </div>
@@ -221,7 +221,7 @@ export function HomePage() {
       {reviews.length > 0 && (
         <section id="reviews" className="mx-auto max-w-6xl px-4 pb-20">
           <p className="eyebrow">{t.clientPerspective}</p>
-          <h2 className={`mt-4 font-semibold tracking-[-0.03em] ${language !== "en" ? "text-2xl md:text-4xl" : "text-4xl md:text-6xl"}`}>{t.reviews}</h2>
+          <h2 className="bangla-section-heading mt-4 text-4xl font-semibold tracking-[-0.03em] md:text-6xl">{t.reviews}</h2>
           <div className="mt-8">
             <CardSlider cardClass="w-[280px] sm:w-[300px]" items={reviews.map((review) => (
               <button
@@ -276,7 +276,7 @@ export function HomePage() {
       {designAssets.length > 0 && (
         <section className="mx-auto max-w-6xl px-4 pb-20">
           <p className="eyebrow">{t.posterBannerDesign}</p>
-          <h2 className={`mt-4 font-semibold tracking-[-0.03em] ${language !== "en" ? "text-2xl md:text-4xl" : "text-4xl md:text-6xl"}`}>{t.posterBannerDesign}</h2>
+          <h2 className="mt-4 text-4xl font-semibold tracking-[-0.03em] md:text-6xl">{t.posterBannerDesign}</h2>
           <div className="mt-8 grid gap-10">
             {(["poster", "banner"] as const).map((kind) => {
               const designs = designAssets.filter((asset) => asset.kind === kind);
@@ -355,7 +355,7 @@ export function HomePage() {
       <section id="contact" className="mx-auto max-w-7xl border-t border-slate-200 px-5 pb-28 pt-20 md:px-8">
         <div className="max-w-4xl">
           <p className="eyebrow">{t.tagline}</p>
-          <h2 className={`mt-5 font-display leading-[0.95] text-foreground ${language === "bn" ? "text-3xl md:text-5xl" : "text-4xl md:text-6xl"}`}>{t.contactTitle}</h2>
+          <h2 className="mt-5 font-display text-4xl leading-[0.95] text-foreground md:text-6xl">{t.contactTitle}</h2>
           <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-600">{t.contactBody}</p>
         </div>
         <div className="mt-10 flex flex-wrap gap-3">
@@ -387,7 +387,7 @@ export function HomePage() {
 function ServicesGrid({ services }: { services: Service[] }) {
   const { t, language } = useLang();
   const labels = services.length > 0
-    ? services.map((service) => language === "ar" ? service.nameAr || service.name : language === "bn" ? service.nameBn || service.name : service.name)
+    ? services.map((service) => language === "bn" ? service.banglaName || service.englishName || service.name : language === "en" ? service.englishName || service.name : service.name)
     : t.services;
   return (
     <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

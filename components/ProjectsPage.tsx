@@ -32,7 +32,7 @@ export function ProjectsPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-20">
-      <h1 className="text-5xl font-bold md:text-6xl">{t.projectsTitle}</h1>
+      <h1 className="text-3xl font-bold md:text-5xl">{t.projectsTitle}</h1>
       <div className="mt-8 flex flex-wrap gap-2">
         <button
           type="button"

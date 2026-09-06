@@ -1,25 +1,20 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Outfit, Tiro_Bangla } from "next/font/google";
+import { Cairo, Tiro_Bangla } from "next/font/google";
 import { AuthProvider } from "@/components/AuthProvider";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import "./globals.css";
 
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
-});
-
-const instrument = Instrument_Serif({
-  variable: "--font-instrument",
-  subsets: ["latin"],
-  weight: "400",
-});
-
 const tiroBangla = Tiro_Bangla({
   variable: "--font-tiro-bangla",
   subsets: ["bengali"],
   weight: "400",
+});
+
+const cairo = Cairo({
+  variable: "--font-cairo",
+  subsets: ["arabic"],
+  weight: ["400", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -30,7 +25,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="ar" dir="rtl" className={`${outfit.variable} ${instrument.variable} ${tiroBangla.variable} h-full antialiased`}>
+    <html lang="en" dir="ltr" className={`${tiroBangla.variable} ${cairo.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <LanguageProvider>
           <AuthProvider>
