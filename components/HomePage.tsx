@@ -7,7 +7,7 @@ import { listCategories, listDesignAssets, listProjects, listReviews, listServic
 import { brand } from "@/lib/content";
 import type { Category, DesignAsset, Project, Review, Service, Task, VideoEntry } from "@/lib/types";
 import { useLang } from "./LanguageProvider";
-import { HeroPrism } from "./HeroPrism";
+import { ScrollReveal } from "./ScrollReveal";
 import { SitePreview } from "./SitePreview";
 import { VideoGallery } from "./VideoGallery";
 import { getDriveImageFallbackUrl, getDriveImageUrl } from "@/lib/video";
@@ -77,13 +77,13 @@ export function HomePage() {
     () => projects.filter((project) => project.completed).length + videos.filter((video) => video.completed).length,
     [projects, videos],
   );
-  const wa = `https://wa.me/${brand.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent("Hello — I would like to discuss a website or digital marketing engagement.")}`;
+  const wa = `https://wa.me/${brand.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent("Hello — I would like to request a website and discuss digital marketing for my business.")}`;
 
   return (
     <div className="overflow-x-clip">
       <section id="home" className="relative overflow-hidden border-b border-slate-200/80">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-16 md:grid-cols-[1.05fr_0.95fr] md:px-8 md:py-24 lg:gap-16">
-          <div className="reveal-up">
+        <div className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
+          <div className="reveal-up max-w-4xl">
             <p className="eyebrow mb-5">
               {t.heroKicker}
             </p>
@@ -98,7 +98,7 @@ export function HomePage() {
                   event.preventDefault();
                   document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
                 }}
-                className="rounded-full bg-foreground px-6 py-3.5 text-sm font-semibold text-white shadow-xl shadow-slate-900/10 hover:-translate-y-0.5 hover:bg-accent"
+                className="rounded-full bg-[#d9b674] px-6 py-3.5 text-sm font-semibold text-black shadow-xl shadow-slate-900/10 hover:-translate-y-0.5 hover:bg-[#caa15d]"
               >
                 {t.ctaPrimary}
               </a>
@@ -113,14 +113,6 @@ export function HomePage() {
                 {t.ctaSecondary}
               </a>
             </div>
-          </div>
-          <div className="relative reveal-up [animation-delay:140ms]">
-            <div className="blob -right-8 top-6 h-80 w-80 opacity-80" />
-            <HeroPrism />
-            <div className="absolute left-0 top-8 border border-foreground/10 bg-[#f7f7f3]/90 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] shadow-sm">{t.web}</div>
-            <div className="absolute right-0 top-16 border border-foreground/10 bg-[#f7f7f3]/90 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] shadow-sm">{t.ads}</div>
-            <div className="absolute bottom-10 left-6 border border-foreground/10 bg-[#f7f7f3]/90 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] shadow-sm">{t.seo}</div>
-            <div className="absolute bottom-16 right-8 border border-foreground/10 bg-[#f7f7f3]/90 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] shadow-sm">{t.brand}</div>
           </div>
         </div>
         <div className="flex justify-center pb-12 text-center md:pb-16">
@@ -139,46 +131,52 @@ export function HomePage() {
       </div>
 
       <section id="services" className="mx-auto max-w-7xl px-5 py-24 md:px-8">
-        <div className="section-rule pt-5">
+        <ScrollReveal className="section-rule pt-5">
           <p className="eyebrow">{t.whatWeDo}</p>
           <h2 className="mt-4 max-w-2xl text-4xl font-semibold leading-tight tracking-[-0.03em] md:text-6xl">{t.servicesHeadline}</h2>
           <p className="mt-5 max-w-2xl text-slate-600">{t.servicesIntro}</p>
-        </div>
-        <ServicesGrid services={services} />
+        </ScrollReveal>
+        <ScrollReveal delay={100}>
+          <ServicesGrid services={services} />
+        </ScrollReveal>
       </section>
 
       <section className="mx-auto grid max-w-7xl gap-px border-y border-slate-200 bg-slate-200 md:grid-cols-3">
-        <article className="bg-foreground p-8 text-white md:col-span-2 md:p-12">
-          <p className="eyebrow text-accent/80">{t.pointOfView}</p>
-          <h2 className="mt-5 max-w-2xl text-4xl font-semibold leading-tight md:text-5xl">{t.focusTitle}</h2>
-          <p className="mt-5 max-w-2xl leading-8 text-white/70">{t.focusBody}</p>
+        <ScrollReveal className="md:col-span-2">
+        <article className="bg-[#d9b674] p-8 text-[#0d3b2e] md:p-12">
+          <p className="eyebrow text-[#0d5c46]">{t.pointOfView}</p>
+          <h2 className="mt-5 max-w-2xl text-4xl font-semibold leading-tight text-[#0d3b2e] md:text-5xl">{t.focusTitle}</h2>
+          <p className="mt-5 max-w-2xl leading-8 text-[#234f46]">{t.focusBody}</p>
         </article>
+        </ScrollReveal>
+        <ScrollReveal delay={140}>
         <article className="bg-soft p-8 md:p-12">
           <p className="eyebrow">{t.beyondBrief}</p>
           <h2 className="mt-5 text-3xl font-semibold leading-tight">{t.legalTitle}</h2>
           <p className="mt-5 leading-8 text-slate-600">{t.legalBody}</p>
         </article>
+        </ScrollReveal>
       </section>
 
       <section className="mx-auto max-w-7xl px-5 py-24 md:px-8">
-        <div className="section-rule grid gap-10 pt-5 md:grid-cols-[0.8fr_1.2fr]">
+        <ScrollReveal className="section-rule grid gap-10 pt-5 md:grid-cols-[0.8fr_1.2fr]">
           <div>
             <p className="eyebrow">{t.howWeWork}</p>
             <h2 className="mt-4 text-4xl font-semibold leading-tight tracking-[-0.03em] md:text-5xl">{t.teamTitle}</h2>
           </div>
           <p className="max-w-2xl text-xl leading-9 text-slate-600 md:text-2xl">{t.teamBody}</p>
-        </div>
+        </ScrollReveal>
       </section>
 
       <section id="work" className="mx-auto max-w-7xl px-5 pb-24 md:px-8">
-        <div className="section-rule flex flex-col gap-5 pt-5 md:flex-row md:items-end md:justify-between">
+        <ScrollReveal className="section-rule flex flex-col gap-5 pt-5 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="eyebrow">{t.selectedWork}</p>
             <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] md:text-5xl">{t.projectsTitle}</h2>
           </div>
           <p className="max-w-xs text-sm leading-6 text-slate-500">{t.workDescription}</p>
-        </div>
-        <div className="mt-8 flex flex-wrap gap-2">
+        </ScrollReveal>
+        <ScrollReveal delay={80} className="mt-8 flex flex-wrap gap-2">
           <button
             type="button"
             onClick={() => setActive("all")}
@@ -196,41 +194,45 @@ export function HomePage() {
               {category.name}
             </button>
           ))}
-        </div>
+        </ScrollReveal>
         {visibleProjects.length === 0 ? (
           <p className="mt-8 text-slate-400">{t.projectsEmpty}</p>
         ) : (
-          <div className="mt-10">
+          <ScrollReveal delay={140} className="mt-10">
             <CardSlider items={visibleProjects.map((project) => (
               <ProjectCard key={project.id} project={project} category={categoryName(project.categoryId)} />
             ))} />
-          </div>
+          </ScrollReveal>
         )}
       </section>
 
       {videos.length > 0 && (
         <section id="video-editing" className="mx-auto max-w-6xl px-4 pb-20">
-          <p className="eyebrow">{t.motionFilm}</p>
-          <h2 className="bangla-section-heading mt-4 text-3xl font-semibold tracking-[-0.03em] md:text-5xl">{t.videoEditing}</h2>
-          <div className="mt-8">
+          <ScrollReveal>
+            <p className="eyebrow">{t.motionFilm}</p>
+            <h2 className="bangla-section-heading mt-4 text-3xl font-semibold tracking-[-0.03em] md:text-5xl">{t.videoEditing}</h2>
+          </ScrollReveal>
+          <ScrollReveal delay={120} className="mt-8">
             <VideoGallery videos={videos} />
-          </div>
+          </ScrollReveal>
         </section>
       )}
 
       {reviews.length > 0 && (
         <section id="reviews" className="mx-auto max-w-6xl px-4 pb-20">
-          <p className="eyebrow">{t.clientPerspective}</p>
-          <h2 className="bangla-section-heading mt-4 text-4xl font-semibold tracking-[-0.03em] md:text-6xl">{t.reviews}</h2>
-          <div className="mt-8">
+          <ScrollReveal>
+            <p className="eyebrow">{t.clientPerspective}</p>
+            <h2 className="bangla-section-heading mt-4 text-4xl font-semibold tracking-[-0.03em] md:text-6xl">{t.reviews}</h2>
+          </ScrollReveal>
+          <ScrollReveal delay={120} className="mt-8">
             <CardSlider cardClass="w-[280px] sm:w-[300px]" items={reviews.map((review) => (
-              <button
-                key={review.id}
-                type="button"
-                onClick={() => setSelectedReview(review)}
-                aria-label={t.openReview}
-                className="group w-full max-w-[280px] overflow-hidden rounded-2xl border border-slate-200 bg-white text-left shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
-              >
+              <ScrollReveal key={review.id} delay={review.id ? 60 : 0}>
+                <button
+                  type="button"
+                  onClick={() => setSelectedReview(review)}
+                  aria-label={t.openReview}
+                  className="group w-full max-w-[280px] overflow-hidden rounded-2xl border border-slate-200 bg-[#2b2d31] text-left shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+                >
                 <img
                   src={getDriveImageUrl(review.imageUrl) ?? review.imageUrl}
                   alt={t.clientReview}
@@ -241,9 +243,10 @@ export function HomePage() {
                   className="h-52 w-full object-contain object-top"
                 />
                 <span className="block border-t border-slate-100 px-4 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 transition group-hover:text-accent">{t.viewFullReview}</span>
-              </button>
+                </button>
+              </ScrollReveal>
             ))} />
-          </div>
+          </ScrollReveal>
         </section>
       )}
 
@@ -259,13 +262,13 @@ export function HomePage() {
             <img
               src={getDriveImageUrl(selectedReview.imageUrl) ?? selectedReview.imageUrl}
               alt={t.clientReviewEnlarged}
-              className="max-h-[88vh] max-w-full rounded-xl bg-white object-contain shadow-2xl"
+                className="max-h-[88vh] max-w-full rounded-xl bg-[#2b2d31] object-contain shadow-2xl"
             />
             <button
               type="button"
               onClick={() => setSelectedReview(null)}
               aria-label={t.closeReview}
-              className="absolute -right-2 -top-2 grid h-10 w-10 place-items-center rounded-full bg-white text-xl text-foreground shadow-lg transition hover:bg-accent hover:text-white"
+              className="absolute -right-2 -top-2 grid h-10 w-10 place-items-center rounded-full bg-[#2b2d31] text-xl text-white shadow-lg transition hover:bg-accent hover:text-white"
             >
               ×
             </button>
@@ -275,9 +278,11 @@ export function HomePage() {
 
       {designAssets.length > 0 && (
         <section className="mx-auto max-w-6xl px-4 pb-20">
-          <p className="eyebrow">{t.posterBannerDesign}</p>
-          <h2 className="mt-4 text-4xl font-semibold tracking-[-0.03em] md:text-6xl">{t.posterBannerDesign}</h2>
-          <div className="mt-8 grid gap-10">
+          <ScrollReveal>
+            <p className="eyebrow">{t.posterBannerDesign}</p>
+            <h2 className="mt-4 text-4xl font-semibold tracking-[-0.03em] md:text-6xl">{t.posterBannerDesign}</h2>
+          </ScrollReveal>
+          <ScrollReveal delay={120} className="mt-8 grid gap-10">
             {(["poster", "banner"] as const).map((kind) => {
               const designs = designAssets.filter((asset) => asset.kind === kind);
               if (designs.length === 0) return null;
@@ -285,13 +290,13 @@ export function HomePage() {
                 <div key={kind}>
                   <h3 className="mb-4 text-xl font-semibold">{kind === "poster" ? t.posters : t.banners}</h3>
                   <CardSlider items={designs.map((design) => (
-                    <button
-                      key={design.id}
-                      type="button"
-                      onClick={() => setSelectedDesign(design)}
-                      aria-label={t.openDesign}
-                      className="group w-full max-w-[280px] overflow-hidden rounded-2xl border border-slate-200 bg-white text-left shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
-                    >
+                    <ScrollReveal key={design.id} delay={80}>
+                      <button
+                        type="button"
+                        onClick={() => setSelectedDesign(design)}
+                        aria-label={t.openDesign}
+                        className="group w-full max-w-[280px] overflow-hidden rounded-2xl border border-slate-200 bg-[#2b2d31] text-left shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+                      >
                       <img
                         src={getDriveImageUrl(design.imageUrl) ?? design.imageUrl}
                         alt={`${kind} design`}
@@ -302,12 +307,13 @@ export function HomePage() {
                         className="h-52 w-full object-cover"
                       />
                       <span className="block border-t border-slate-100 px-4 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 transition group-hover:text-accent">{t.viewFullDesign}</span>
-                    </button>
+                      </button>
+                    </ScrollReveal>
                   ))} />
                 </div>
               );
             })}
-          </div>
+          </ScrollReveal>
         </section>
       )}
 
@@ -323,13 +329,13 @@ export function HomePage() {
             <img
               src={getDriveImageUrl(selectedDesign.imageUrl) ?? selectedDesign.imageUrl}
               alt={t.designImageEnlarged}
-              className="max-h-[88vh] max-w-full rounded-xl bg-white object-contain shadow-2xl"
+                        className="max-h-[88vh] max-w-full rounded-xl bg-[#2b2d31] object-contain shadow-2xl"
             />
             <button
               type="button"
               onClick={() => setSelectedDesign(null)}
               aria-label={t.closeDesign}
-              className="absolute -right-2 -top-2 grid h-10 w-10 place-items-center rounded-full bg-white text-xl text-foreground shadow-lg transition hover:bg-accent hover:text-white"
+              className="absolute -right-2 -top-2 grid h-10 w-10 place-items-center rounded-full bg-[#2b2d31] text-xl text-white shadow-lg transition hover:bg-accent hover:text-white"
             >
               ×
             </button>
@@ -339,31 +345,35 @@ export function HomePage() {
 
       {tasks.length > 0 && (
         <section className="mx-auto max-w-6xl px-4 pb-20">
-          <h2 className="text-4xl font-bold">{t.workTitle}</h2>
-          <div className="mt-8 grid gap-4 md:grid-cols-2">
+          <ScrollReveal>
+            <h2 className="text-4xl font-bold">{t.workTitle}</h2>
+          </ScrollReveal>
+          <ScrollReveal delay={100} className="mt-8 grid gap-4 md:grid-cols-2">
             {tasks.map((task) => (
-              <article key={task.id} className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+              <ScrollReveal key={task.id} delay={80}>
+              <article className="rounded-3xl border border-slate-100 bg-[#2b2d31] p-6 shadow-sm">
                 <p className="text-[11px] tracking-[0.28em] uppercase text-accent">{task.status.replace("_", " ")}</p>
                 <h3 className="mt-3 text-xl font-semibold">{task.title}</h3>
                 <p className="mt-2 text-sm text-slate-500">{task.description}</p>
               </article>
+              </ScrollReveal>
             ))}
-          </div>
+          </ScrollReveal>
         </section>
       )}
 
       <section id="contact" className="mx-auto max-w-7xl border-t border-slate-200 px-5 pb-28 pt-20 md:px-8">
-        <div className="max-w-4xl">
+        <ScrollReveal className="max-w-4xl">
           <p className="eyebrow">{t.tagline}</p>
           <h2 className="mt-5 font-display text-4xl leading-[0.95] text-foreground md:text-6xl">{t.contactTitle}</h2>
           <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-600">{t.contactBody}</p>
-        </div>
-        <div className="mt-10 flex flex-wrap gap-3">
+        </ScrollReveal>
+        <ScrollReveal delay={100} className="mt-10 flex flex-wrap gap-3">
           <a
             href={wa}
             target="_blank"
             rel="noreferrer"
-            className="rounded-full bg-foreground px-6 py-3.5 text-sm font-semibold text-white shadow-xl shadow-slate-900/10 hover:-translate-y-0.5 hover:bg-accent"
+            className="rounded-full bg-[#d9b674] px-6 py-3.5 text-sm font-semibold text-black shadow-xl shadow-slate-900/10 hover:-translate-y-0.5 hover:bg-[#caa15d]"
           >
             {t.sendWhatsApp}
           </a>
@@ -373,12 +383,12 @@ export function HomePage() {
           >
             {t.sendEmail}
           </a>
-        </div>
-        <div className="mt-16 grid gap-4 border-t border-slate-200 pt-6 text-sm text-slate-600 sm:grid-cols-3">
+        </ScrollReveal>
+        <ScrollReveal delay={160} className="mt-16 grid gap-4 border-t border-slate-200 pt-6 text-sm text-slate-600 sm:grid-cols-3">
           <p>{t.whatsapp}: +{brand.whatsapp}</p>
           <p className="mt-2">{t.email}: {brand.email}</p>
           <p className="mt-6 text-sm font-semibold tracking-[0.2em] uppercase text-accent">{t.heroKicker}</p>
-        </div>
+        </ScrollReveal>
       </section>
     </div>
   );
@@ -392,14 +402,15 @@ function ServicesGrid({ services }: { services: Service[] }) {
   return (
     <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
       {labels.map((label, index) => (
+        <ScrollReveal key={label} delay={index * 70}>
           <article
-            key={label}
-            className="group min-h-48 border border-slate-200 bg-[#fbfcf8] p-5 transition duration-300 hover:-translate-y-1 hover:border-accent hover:bg-accent hover:text-white hover:shadow-xl hover:shadow-accent/20"
+            className="group min-h-48 border border-slate-200 bg-[#2b2d31] p-5 transition duration-300 hover:-translate-y-1 hover:border-accent hover:bg-accent hover:text-white hover:shadow-xl hover:shadow-accent/20"
           >
             <p className="text-[11px] font-semibold tracking-[0.3em] text-accent group-hover:text-white/70">{String(index + 1).padStart(2, "0")}</p>
             <h3 className="mt-10 max-w-xs text-lg font-semibold leading-6">{label}</h3>
             <p className="mt-4 text-xs uppercase tracking-[0.16em] text-slate-400 group-hover:text-white/70">{t.capability}</p>
           </article>
+        </ScrollReveal>
       ))}
     </div>
   );
@@ -467,7 +478,8 @@ export function ProjectCard({ project, category }: { project: Project; category?
   const { t } = useLang();
 
   return (
-    <article className="group overflow-hidden rounded-2xl border border-slate-200 bg-[#fbfcf8] shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+    <ScrollReveal>
+    <article className="group overflow-hidden rounded-2xl border border-slate-200 bg-[#2b2d31] shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
       <SitePreview url={project.liveUrl} title={project.title} className="h-52" />
       <div className="p-5">
         <div className="flex items-center justify-between gap-2 text-[10px] font-semibold tracking-[0.2em] uppercase text-accent">
@@ -488,5 +500,6 @@ export function ProjectCard({ project, category }: { project: Project; category?
         </div>
       </div>
     </article>
+    </ScrollReveal>
   );
 }

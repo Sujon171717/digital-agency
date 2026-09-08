@@ -5,7 +5,7 @@ import { useLang } from "./LanguageProvider";
 
 export function ContactPage() {
   const { t } = useLang();
-  const wa = `https://wa.me/${brand.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent("Hello — I would like to discuss a website or digital marketing engagement.")}`;
+  const wa = `https://wa.me/${brand.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent("Hello — I would like to request a website and discuss digital marketing for my business.")}`;
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-20">
@@ -17,7 +17,7 @@ export function ContactPage() {
           href={wa}
           target="_blank"
           rel="noreferrer"
-          className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white hover:bg-[#1e8a80]"
+          className="rounded-full bg-[#d9b674] px-6 py-3 text-sm font-semibold text-black hover:bg-[#caa15d]"
         >
           {t.sendWhatsApp}
         </a>

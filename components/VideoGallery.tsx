@@ -73,7 +73,7 @@ export function VideoGallery({ videos }: { videos: VideoEntry[] }) {
               <VideoFrame video={video} />
             </div>
             <span className="pointer-events-none absolute inset-0 grid place-items-center bg-slate-900/0 transition group-hover:bg-slate-900/20">
-              <span className="grid h-12 w-12 place-items-center rounded-full bg-white/95 text-accent opacity-0 shadow-lg transition group-hover:opacity-100" aria-hidden="true">
+              <span className="grid h-12 w-12 place-items-center rounded-full bg-[#2b2d31]/95 text-white opacity-0 shadow-lg transition group-hover:opacity-100" aria-hidden="true">
                 ▶
               </span>
             </span>

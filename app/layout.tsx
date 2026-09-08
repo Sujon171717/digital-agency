@@ -3,6 +3,7 @@ import { Cairo, Tiro_Bangla } from "next/font/google";
 import { AuthProvider } from "@/components/AuthProvider";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
+import { ScrollAnimationBackground } from "@/components/ScrollAnimationBackground";
 import "./globals.css";
 
 const tiroBangla = Tiro_Bangla({
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" dir="ltr" className={`${tiroBangla.variable} ${cairo.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <ScrollAnimationBackground />
         <LanguageProvider>
           <AuthProvider>
             <SiteHeader />

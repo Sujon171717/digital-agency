@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f7f7f3;
-  --foreground: #10221f;
-  --accent: #0c9b87;
-  --accent-dark: #087767;
-  --muted: #65736f;
-  --soft: #eaf1ed;
-  --ink: #10221f;
-  --line: rgba(16, 34, 31, 0.12);
+  --background: #0b5d46;
+  --foreground: #f4efe8;
+  --accent: #d1b06a;
+  --accent-dark: #b98d46;
+  --muted: #dfe8e4;
+  --soft: #0f6d52;
+  --ink: #ffffff;
+  --line: rgba(255, 255, 255, 0.2);
 }
 
 @theme inline {
@@ -22,7 +22,7 @@
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: #0c9b87 #eaf1ed;
+  scrollbar-color: #0c9b87 #2b2d31;
 }
 
 html {
@@ -31,11 +31,76 @@ html {
 }
 
 body {
-  background: var(--background);
+  background: linear-gradient(135deg, #0b5d46 0%, #0d694f 35%, #0a4d3d 100%);
   color: var(--foreground);
   font-family: "Times New Roman", Times, serif;
-  background-image: linear-gradient(rgba(16, 34, 31, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(16, 34, 31, 0.035) 1px, transparent 1px);
-  background-size: 48px 48px;
+  background-image: radial-gradient(circle at top left, rgba(209, 176, 106, 0.18), transparent 22%), radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.08), transparent 18%), linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: auto, auto, 48px 48px, 48px 48px;
+}
+
+.site-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: #2b2d31;
+}
+
+.site-background canvas {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+
+body:has(.site-background) {
+  --background: #0b5d46;
+  --foreground: #f4efe8;
+  color: #ffffff;
+  background: #0b5d46;
+}
+
+body:has(.site-background) > *:not(.site-background) {
+  position: relative;
+  z-index: 1;
+}
+
+body:has(.site-background) header {
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(11, 93, 70, 0.8);
+}
+
+body:has(.site-background) footer,
+body:has(.site-background) .bg-soft,
+body:has(.site-background) .bg-white,
+body:has(.site-background) [class*="bg-[#f7f7f3]"],
+body:has(.site-background) [class*="bg-[#fbfcf8]"] {
+  background-color: rgba(15, 109, 82, 0.92) !important;
+}
+
+body:has(.site-background) .text-slate-400,
+body:has(.site-background) .text-slate-500,
+body:has(.site-background) .text-slate-600 {
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+body:has(.site-background) .text-foreground,
+body:has(.site-background) .text-slate-700,
+body:has(.site-background) .text-slate-800 {
+  color: #ffffff !important;
+}
+
+body:has(.site-background) [class*="text-slate-"] {
+  color: #ffffff !important;
+}
+
+body:has(.site-background) .text-accent,
+body:has(.site-background) .eyebrow {
+  color: #ffffff !important;
+}
+
+body:has(.site-background) [class*="border-slate"] {
+  border-color: rgba(255, 255, 255, 0.2) !important;
 }
 
 html[lang="bn"] body {
@@ -102,74 +167,28 @@ html[lang="ar"] .font-display {
   animation: reveal-up 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 700ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 @keyframes reveal-up {
   from { opacity: 0; transform: translateY(18px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.blob {
-  position: absolute;
-  border-radius: 62% 38% 46% 54% / 48% 42% 58% 52%;
-  background: #dcece5;
-  filter: blur(1px);
-}
-
-.scene-3d {
-  perspective: 1400px;
-  perspective-origin: 50% 42%;
-  transform-style: preserve-3d;
-}
-
-.preserve-3d {
-  transform-style: preserve-3d;
-}
-
-.prism {
-  position: relative;
-  width: 240px;
-  height: 240px;
-  --prism-scale: 1;
-  transform-style: preserve-3d;
-}
-
-.prism-face {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  padding: 1.5rem;
-  text-align: center;
-  border: 1px solid rgba(12, 155, 135, 0.35);
-  background: linear-gradient(160deg, #fbfcf8, #dcece5);
-  color: #10221f;
-  backface-visibility: hidden;
-  box-shadow: 0 18px 40px rgba(16, 34, 31, 0.12);
-}
-
-.prism-face.front {
-  transform: translateZ(120px);
-}
-.prism-face.back {
-  transform: rotateY(180deg) translateZ(120px);
-}
-.prism-face.right {
-  transform: rotateY(90deg) translateZ(120px);
-}
-.prism-face.left {
-  transform: rotateY(-90deg) translateZ(120px);
-}
-.prism-face.top {
-  transform: rotateX(90deg) translateZ(120px);
-}
-.prism-face.bottom {
-  transform: rotateX(-90deg) translateZ(120px);
-}
-
 .scroll-card {
   backface-visibility: hidden;
   border: 1px solid rgba(16, 34, 31, 0.12);
-  background: #fbfcf8;
-  color: #10221f;
+  background: rgba(5, 8, 17, 0.82);
+  color: #ffffff;
   box-shadow: 0 24px 50px rgba(16, 34, 31, 0.12);
 }
 
@@ -192,17 +211,16 @@ html[lang="ar"] .font-display {
   html {
     scroll-behavior: auto;
   }
-  .prism,
   .scroll-card,
   .marquee,
-  .reveal-up {
+  .reveal-up,
+  .scroll-reveal {
     transform: none !important;
     animation: none !important;
+    opacity: 1 !important;
+    transition: none !important;
   }
 }
 
 @media (max-width: 419px) {
-  .prism {
-    --prism-scale: 0.8;
-  }
 }

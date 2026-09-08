@@ -75,16 +75,16 @@ export function SiteHeader() {
   if (pathname.startsWith("/admin")) return null;
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-[#f7f7f3]/85 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-[#2b2d31]/85 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-3 gap-y-2 px-5 py-3 sm:flex-nowrap sm:gap-4 lg:px-8">
         <SectionLink id="home" className="flex min-w-0 items-center">
-          <BrandLogo className="h-14 w-auto mix-blend-multiply sm:h-16 lg:h-20" priority />
+          <BrandLogo className="h-10 w-auto shrink-0 bg-white sm:h-12 lg:h-14" priority />
           <span className="sr-only">{brand.legalName}</span>
         </SectionLink>
         <p className="hidden text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400 lg:block">{t.headerDescriptor}</p>
         <div className="flex items-center gap-2 sm:order-4">
           <label className="sr-only" htmlFor="language-switcher">{t.switchLanguage}</label>
-          <select id="language-switcher" value={language} onChange={(event) => setLanguage(event.target.value as typeof language)} className="border border-slate-300 bg-transparent px-2 py-2 text-xs font-semibold text-foreground outline-none">
+          <select id="language-switcher" value={language} onChange={(event) => setLanguage(event.target.value as typeof language)} className="border border-slate-300 bg-[#2b2d31] px-2 py-2 text-xs font-semibold text-white outline-none">
             <option value="ar">العربية</option>
             <option value="bn">বাংলা</option>
             <option value="en">English</option>
@@ -101,7 +101,7 @@ export function SiteHeader() {
           <SectionLink
             id="contact"
             onNavigate={() => setMenuOpen(false)}
-            className="rounded-full bg-foreground px-3 py-2 text-xs font-semibold text-white shadow-lg shadow-slate-900/10 hover:-translate-y-0.5 hover:bg-accent sm:px-5 sm:py-2.5 sm:text-sm"
+            className="rounded-full bg-[#2b2d31] px-3 py-2 text-xs font-semibold text-white shadow-lg shadow-slate-900/10 hover:-translate-y-0.5 hover:bg-accent sm:px-5 sm:py-2.5 sm:text-sm"
           >
             {t.ctaPrimary}
           </SectionLink>
