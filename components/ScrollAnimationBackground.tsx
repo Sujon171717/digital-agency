@@ -20,6 +20,8 @@ export function ScrollAnimationBackground() {
     const context = canvas.getContext("2d");
     if (!context) return;
 
+    const canvasElement = canvas;
+    const ctx = context;
     const frames: HTMLImageElement[] = [];
     let targetProgress = 0;
     let displayedProgress = 0;
@@ -36,15 +38,15 @@ export function ScrollAnimationBackground() {
       const scale = Math.max(viewportWidth / frameWidth, viewportHeight / frameHeight);
       const width = frameWidth * scale;
       const height = frameHeight * scale;
-      context.clearRect(0, 0, viewportWidth, viewportHeight);
-      context.drawImage(frame, (viewportWidth - width) / 2, (viewportHeight - height) / 2, width, height);
+      ctx.clearRect(0, 0, viewportWidth, viewportHeight);
+      ctx.drawImage(frame, (viewportWidth - width) / 2, (viewportHeight - height) / 2, width, height);
     }
 
     function resizeCanvas() {
       const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.round(window.innerWidth * pixelRatio);
-      canvas.height = Math.round(window.innerHeight * pixelRatio);
-      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      canvasElement.width = Math.round(window.innerWidth * pixelRatio);
+      canvasElement.height = Math.round(window.innerHeight * pixelRatio);
+      ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
       drawFrame(activeFrame < 0 ? 0 : activeFrame);
     }
 
