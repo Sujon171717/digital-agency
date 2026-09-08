@@ -15,8 +15,10 @@ export function ScrollAnimationBackground() {
     if (pathname.startsWith("/admin")) return;
 
     const canvas = canvasRef.current;
-    const context = canvas?.getContext("2d");
-    if (!canvas || !context) return;
+    if (!canvas) return;
+
+    const context = canvas.getContext("2d");
+    if (!context) return;
 
     const frames: HTMLImageElement[] = [];
     let targetProgress = 0;
